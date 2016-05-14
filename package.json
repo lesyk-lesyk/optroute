@@ -1,0 +1,30 @@
+{
+  "name": "optroute",
+  "version": "1.0.0",
+  "description": "App for searching optimal routes on the google maps",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "postinstall": "./node_modules/bower/bin/bower install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/okachynskyy/optroute.git"
+  },
+  "keywords": [
+    "angular",
+    "bootstrap",
+    "javaScript"
+  ],
+  "author": "Oleksiy Kachynskyy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/okachynskyy/optroute/issues"
+  },
+  "homepage": "https://github.com/okachynskyy/optroute#readme",
+  "dependencies": {
+    "bower": "^1.7.9",
+    "express": "^4.13.4"
+  }
+}

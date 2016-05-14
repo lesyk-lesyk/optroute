@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+  <meta charset="utf8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/">
+  <title>OptRoute - сoursework</title>
+  <link rel="shortcut icon" href="img/favicon.ico">
+
+  <!-- bootstrap-->
+  <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+  <!-- app styles-->
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+
+<body>
+
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand hreflogo" href="#/"><img src="/img/logo.png" height=35 width=35></a>
+        <a class="navbar-brand" href="#/">OptRoute</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="#/search">Search</a></li>
+          <li><a href="#/about">About</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="https://github.com/okachynskyy/optroute" target="blank">
+            GitHub <span class="glyphicon glyphicon-new-window"></span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container body-content">
+    <div ng-view></div>
+  </div> <!-- /container -->
+
+
+  <div class="container body-content">
+    <hr />
+    <footer>
+      <p>&copy; 2016 - OptRoute | Качинський Олексій</p>
+    </footer>
+  </div> <!-- /container -->
+
+
+  <!-- jquery, bootstrap-->
+  <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  <!-- angular -->
+  <script src="/bower_components/angular/angular.min.js"></script>
+  <script src="/bower_components/angular-route/angular-route.min.js"></script>
+
+  <!-- client app and dependencies -->
+  <script src="/js/client-app.js"></script>
+
+</body>
+</html>
