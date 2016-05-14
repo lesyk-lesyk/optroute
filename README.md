@@ -1,2 +1,2 @@
 # optroute
-Search optimal routes on the google maps
+App for searching optimal routes on the google maps.
