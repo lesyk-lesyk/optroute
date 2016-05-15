@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ngRoute']);
+var app = angular.module('app', ['ngRoute', 'uiGmapgoogle-maps']);
 
 app.config(function($routeProvider) {
   $routeProvider
@@ -21,6 +21,8 @@ app.config(function($routeProvider) {
 app.controller('searchController', ['$scope', 'SearchFactory', function($scope, SearchFactory){
   console.log('searchController');
   SearchFactory.somefunc();
+
+  $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
 }]); 
 
 

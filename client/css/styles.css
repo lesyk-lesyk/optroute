@@ -1,46 +1,72 @@
 body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+  padding-top: 50px;
+  padding-bottom: 20px;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
+will truncate terms that are too long to fit in the left column 
 */
 .dl-horizontal dt {
-    white-space: normal;
+  white-space: normal;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
-    max-width: 280px;
+  max-width: 280px;
 }
 
 .hreflogo{
-    padding: 0px;
-    margin-top: 8px;
-    margin-right: 20px;
-    margin-left: 20px;
-    vertical-align: central;
+  padding: 0px;
+  margin-top: 8px;
+  margin-right: 20px;
+  margin-left: 20px;
+  vertical-align: central;
 }
 
 .img-block{
-    text-align: center;
-    height: 100px;
-    margin-bottom: 10px;
+  text-align: center;
+  height: 100px;
+  margin-bottom: 10px;
 }
 
 .row-header{
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 .logo{
-    padding: 15px;
+  padding: 15px;
+}
+
+
+
+
+
+html, body, #map_canvas {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+}
+
+#map_canvas {
+  position: relative;
+}
+
+.angular-google-map-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+#map_canvas{
+  height: 400px;
 }
