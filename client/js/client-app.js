@@ -31,6 +31,8 @@ app.controller('searchController', ['$scope', 'GMFactory', function($scope, GMFa
   $scope.testData1 = GMFactory.testData1;
   $scope.testData2 = GMFactory.testData2;
   $scope.testData3 = GMFactory.testData3;
+
+  $scope.getBFTime = GMFactory.getBFTime;
   
 }]); 
 
@@ -243,10 +245,15 @@ app.factory('GMFactory', ['$http', '$q', 'SearchFactory', function ($http, $q, S
     calculateOptRoute(locations, order);
   };
 
+  var bfTime;
+  function getBFTime(){return bfTime}
+  function setBFTime(time){bfTime=time}
+
   function findBFRoute(){
-    var order = SearchFactory.bruteForce(matrixDistances);
-    console.log('bruteForce order', order);
-    calculateOptRoute(locations, order);
+    var data = SearchFactory.bruteForce(matrixDistances);
+    console.log('bruteForce order', data.bestOrder);
+    setBFTime(data.time);
+    calculateOptRoute(locations, data.bestOrder);
   };
   
   function testData1(){
@@ -310,7 +317,8 @@ app.factory('GMFactory', ['$http', '$q', 'SearchFactory', function ($http, $q, S
     optimizeRoute: optimizeRoute,
     findBFRoute: findBFRoute,
     calculateMatrixDistances: calculateMatrixDistances,
-    getMatrixDistances: getMatrixDistances
+    getMatrixDistances: getMatrixDistances,
+    getBFTime: getBFTime
   };
   return factory;
 
@@ -335,6 +343,7 @@ app.factory('SearchFactory', ['$http', function ($http) {
   }
 
   function bruteForce(matrix){
+    var startTime = new Date();
     var order = [];
 
     var permArr = [],
@@ -377,7 +386,7 @@ app.factory('SearchFactory', ['$http', function ($http) {
       // console.log(minRoute);
     }
     bestOrder.pop();
-    return bestOrder;
+    return {bestOrder: bestOrder, time: ((new Date().getTime() - startTime.getTime())/1000)};
   }
 
   var factory = {
