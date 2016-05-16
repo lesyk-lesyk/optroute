@@ -48,9 +48,6 @@ app.factory('GMFactory', ['$http', '$q', 'SearchFactory', function ($http, $q, S
 
   var initialize = function() {
     var myLatLng = {lat: 49.838425, lng: 24.031116};
-    // If map has not been created already...
-    if (!map){
-      // Create a new map and place in the index.html page
       map = new google.maps.Map(document.getElementById('map'), {
         zoom: 15,
         center: myLatLng
@@ -59,7 +56,6 @@ app.factory('GMFactory', ['$http', '$q', 'SearchFactory', function ($http, $q, S
       google.maps.event.addListener(map, 'click', function(event) {
         addPoint(event.latLng)
       });
-    }
   };
 
   function addPoint(location){
