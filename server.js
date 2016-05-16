@@ -8,10 +8,6 @@ app.get('/', function(req, res) {
   res.sendFile(__dirname + "/client/html/index.html");
 });
 
-app.get('/googlea05b9cbec9ff53c3.html', function(req, res) {
-  res.sendFile(__dirname + "/client/html/googlea05b9cbec9ff53c3.html");
-});
-
 var port = process.env.PORT || 3000;
 
 var Server = require('http').createServer(app);
