@@ -29,6 +29,7 @@ app.controller('searchController', ['$scope', 'GMFactory', function($scope, GMFa
   $scope.getMatrixDistances = GMFactory.getMatrixDistances;
   $scope.testData1 = GMFactory.testData1;
   $scope.testData2 = GMFactory.testData2;
+  $scope.testData3 = GMFactory.testData3;
 
 }]); 
 
@@ -85,8 +86,8 @@ app.factory('GMFactory', ['$http', '$q', 'SearchFactory', function ($http, $q, S
         map: map,
       });
       markers.push(marker);
-      map.panTo(location);
     })
+    map.panTo(locations[locations.length-1]);
   };
 
   function addAddressFromLocation(location) {
@@ -155,6 +156,44 @@ app.factory('GMFactory', ['$http', '$q', 'SearchFactory', function ($http, $q, S
     });
   }
 
+  function calculateOptRoute(locations, order) {
+    directionsDisplay.setMap(null);
+    directionsDisplay.setMap(map);
+    clearMarkers();
+    var start = locations[order[0]];
+    var end = locations[order[0]];   
+    var waypts = [];
+    var selectedMode = document.getElementById('mode').value;
+    for (var i = 1; i < locations.length; i++) {
+      waypts.push({
+        location:locations[order[i]],
+        stopover:true
+      });
+    }
+    var request = {
+      origin:start,
+      destination:end,
+      travelMode: google.maps.TravelMode[selectedMode],
+      waypoints: waypts
+    };
+    directionsService.route(request, function(response, status) {
+      if (status == google.maps.DirectionsStatus.OK) {
+        directionsDisplay.setDirections(response);
+        
+        var route = response.routes[0];
+        var totalLength=0;
+        var totalDuration=0;
+        for (var i = 0; i < route.legs.length; i++) {
+          var routeSegment = i + 1;        
+          totalLength+=route.legs[i].distance.value;
+          totalDuration+=route.legs[i].duration.value;
+        }
+        console.log("Довжина Оптимізованого маршруту: ", totalLength/1000, "km");
+        console.log("Тривалість Оптимізованого маршруту: ", totalDuration/60, "m");
+      }
+    });
+  }
+
   function calculateMatrixDistances(){
     var promise = $q(function(resolve, reject) {
       var service = new google.maps.DistanceMatrixService();
@@ -198,7 +237,8 @@ app.factory('GMFactory', ['$http', '$q', 'SearchFactory', function ($http, $q, S
   }
 
   function optimizeRoute(){
-    SearchFactory.nearestNeighbour(matrixDistances);
+    var order = SearchFactory.nearestNeighbour(matrixDistances);
+    calculateOptRoute(locations, order);
   };
   
   function testData1(){
@@ -206,9 +246,13 @@ app.factory('GMFactory', ['$http', '$q', 'SearchFactory', function ($http, $q, S
     var location2  = new google.maps.LatLng(49.833356, 24.038725);
     var location3  = new google.maps.LatLng(49.837229, 24.017517);
 
-    addPoint(location1);
-    addPoint(location2);
-    addPoint(location3);
+    var arr = [location1, location2, location3];
+    
+    var index = 0;
+    callNTimes(3, 1000, function() {
+      addPoint(arr[index]);
+      index++;
+    });
   };
 
   function testData2(){
@@ -218,17 +262,40 @@ app.factory('GMFactory', ['$http', '$q', 'SearchFactory', function ($http, $q, S
     var location4  = new google.maps.LatLng(49.233083, 28.468217);
     var location5  = new google.maps.LatLng(48.6208, 22.287883);
 
-    addPoint(location1);
-    addPoint(location2);
-    addPoint(location3);
-    addPoint(location4);
-    addPoint(location5);
+    var arr = [location1, location2, location3, location4, location5];
+    
+    var index = 0;
+    callNTimes(5, 1000, function() {
+      addPoint(arr[index]);
+      index++;
+    });
+  };
+
+  function testData3(){
+    var location1  = new google.maps.LatLng(49.839683, 24.029717);
+    var location2  = new google.maps.LatLng(50.4501, 30.5234);
+    var location3  = new google.maps.LatLng(48.2920787, 25.9358367);
+    var location4  = new google.maps.LatLng(49.233083, 28.468217);
+    var location5  = new google.maps.LatLng(48.6208, 22.287883);
+    var location6  = new google.maps.LatLng(46.635417, 32.616867);
+    var location7  = new google.maps.LatLng(50.6199, 26.251617);
+    var location8  = new google.maps.LatLng(49.588267, 34.551417);
+    var location9  = new google.maps.LatLng(49.9935, 36.230383);
+
+    var arr = [location1, location2, location3, location4, location5, location6, location7, location8, location9];
+    
+    var index = 0;
+    callNTimes(9, 1000, function() {
+      addPoint(arr[index]);
+      index++;
+    });
   };
 
   var factory = {
     initialize: initialize,
     testData1: testData1,
     testData2: testData2,
+    testData3: testData3,
     clearMap: clearMap,
     getAddresses: getAddresses,
     calculateRoute: calculateRoute,
@@ -244,10 +311,18 @@ app.factory('GMFactory', ['$http', '$q', 'SearchFactory', function ($http, $q, S
 
 app.factory('SearchFactory', ['$http', function ($http) {
   function nearestNeighbour(matrix){
-    for (var i=0; i<matrix.length; i++){
-      for (var j=0; j<matrix[i].length; j++)
-        console.log(matrix[i][j]);
+    var order = [0];
+    var row=0;
+    for (var i=0; i<matrix.length-1; i++){
+      var min = Infinity;
+      var minIndex = 0;
+      for (var j=0; j<matrix[row].length; j++){
+        if (matrix[row][j]<min && order.indexOf(j) == -1){ minIndex=j; min=matrix[row][j]}
+      }
+      order.push(minIndex);
+      row=minIndex;
     }
+    return order;
   }
 
   var factory = {
@@ -255,3 +330,15 @@ app.factory('SearchFactory', ['$http', function ($http) {
   };
   return factory;
 }]);
+
+
+
+// function for cyclic calling some function with delay in ms
+function callNTimes(n, time, fn) {
+  function callFn() {
+    if (--n < 0) return;
+    fn();
+    setTimeout(callFn, time);
+  }
+  setTimeout(callFn, time);
+}
