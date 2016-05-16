@@ -25,12 +25,13 @@ app.controller('searchController', ['$scope', 'GMFactory', function($scope, GMFa
   $scope.getAddresses = GMFactory.getAddresses;
   $scope.calculateRoute = GMFactory.calculateRoute;
   $scope.optimizeRoute = GMFactory.optimizeRoute;
+  $scope.findBFRoute = GMFactory.findBFRoute;
   $scope.calculateMatrixDistances = GMFactory.calculateMatrixDistances;
   $scope.getMatrixDistances = GMFactory.getMatrixDistances;
   $scope.testData1 = GMFactory.testData1;
   $scope.testData2 = GMFactory.testData2;
   $scope.testData3 = GMFactory.testData3;
-
+  
 }]); 
 
 app.factory('GMFactory', ['$http', '$q', 'SearchFactory', function ($http, $q, SearchFactory) {
@@ -238,6 +239,13 @@ app.factory('GMFactory', ['$http', '$q', 'SearchFactory', function ($http, $q, S
 
   function optimizeRoute(){
     var order = SearchFactory.nearestNeighbour(matrixDistances);
+    console.log('nearestNeighbour order', order);
+    calculateOptRoute(locations, order);
+  };
+
+  function findBFRoute(){
+    var order = SearchFactory.bruteForce(matrixDistances);
+    console.log('bruteForce order', order);
     calculateOptRoute(locations, order);
   };
   
@@ -300,6 +308,7 @@ app.factory('GMFactory', ['$http', '$q', 'SearchFactory', function ($http, $q, S
     getAddresses: getAddresses,
     calculateRoute: calculateRoute,
     optimizeRoute: optimizeRoute,
+    findBFRoute: findBFRoute,
     calculateMatrixDistances: calculateMatrixDistances,
     getMatrixDistances: getMatrixDistances
   };
@@ -325,8 +334,55 @@ app.factory('SearchFactory', ['$http', function ($http) {
     return order;
   }
 
+  function bruteForce(matrix){
+    var order = [];
+
+    var permArr = [],
+      usedChars = [];
+
+    function permute(input) {
+      var i, ch;
+      for (i = 0; i < input.length; i++) {
+        ch = input.splice(i, 1)[0];
+        usedChars.push(ch);
+        if (input.length == 0) {
+          permArr.push(usedChars.slice());
+        }
+        permute(input);
+        input.splice(i, 0, ch);
+        usedChars.pop();
+      }
+      return permArr
+    };
+
+    var arr = [];
+    for (var i = 1; i < matrix.length; i++) {
+      arr.push(i);
+    }
+    var permutedArray = permute(arr);
+    permutedArray.forEach(function(item){item.push(0); item.unshift(0)});
+    // console.log(permutedArray);
+    // console.log('length', permutedArray.length );
+
+    var bestOrder=[];
+    var minRoute = Infinity;
+    var sum;
+
+    for (var i = 0; i < permutedArray.length; i++) {
+      var sum=0;
+      for (var j = 0; j < permutedArray[i].length-1; j++) {
+        sum+=matrix[permutedArray[i][j]][permutedArray[i][j+1]];
+      }
+      if (sum<minRoute){minRoute=sum; bestOrder = permutedArray[i]};
+      // console.log(minRoute);
+    }
+    bestOrder.pop();
+    return bestOrder;
+  }
+
   var factory = {
     nearestNeighbour: nearestNeighbour,
+    bruteForce: bruteForce
   };
   return factory;
 }]);
