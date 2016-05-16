@@ -22,7 +22,7 @@
 <div class="row">
   <div col-xs-12>
     <br />
-    <form role="form">
+    <form class="form-inline" role="form">
       <div class="form-group">
         <label for="mode">Select trip type:</label>
         <select class="form-control" id="mode">
@@ -32,14 +32,13 @@
           <option value="TRANSIT">Transit</option>
         </select>
       </div>
-    </form>
-
-    <form role="form">
       <div class="form-group">
-        <button ng-click="clearMap()">clearMap</button>
+        <button ng-click="testData1()">Test Data 1</button>
+        <button ng-click="testData2()">Test Data 2</button>
+        <button ng-click="clearMap()">Сlear Map</button>
         <button ng-click="calculateRoute()">calculateRoute</button>
-        <button ng-click="optimizeRoute()">optimizeRoute</button>
         <button ng-click="calculateMatrixDistances()">calculateMatrixDistances</button>
+        <button ng-click="optimizeRoute()">optimizeRoute</button>
       </div>
     </form>
 

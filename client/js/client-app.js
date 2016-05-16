@@ -18,7 +18,7 @@ app.config(function($routeProvider) {
 });
 
 
-app.controller('searchController', ['$scope', 'SearchFactory', 'GMFactory', function($scope, SearchFactory, GMFactory){
+app.controller('searchController', ['$scope', 'GMFactory', function($scope, GMFactory){
   GMFactory.initialize();
 
   $scope.clearMap = GMFactory.clearMap;
@@ -27,10 +27,12 @@ app.controller('searchController', ['$scope', 'SearchFactory', 'GMFactory', func
   $scope.optimizeRoute = GMFactory.optimizeRoute;
   $scope.calculateMatrixDistances = GMFactory.calculateMatrixDistances;
   $scope.getMatrixDistances = GMFactory.getMatrixDistances;
+  $scope.testData1 = GMFactory.testData1;
+  $scope.testData2 = GMFactory.testData2;
 
 }]); 
 
-app.factory('GMFactory', ['$http', '$q', function ($http, $q) {
+app.factory('GMFactory', ['$http', '$q', 'SearchFactory', function ($http, $q, SearchFactory) {
 
   var map;
   var locations = [];
@@ -51,18 +53,17 @@ app.factory('GMFactory', ['$http', '$q', function ($http, $q) {
       });
       directionsDisplay.setMap(map);
       google.maps.event.addListener(map, 'click', function(event) {
-        locations.push(event.latLng);
-        clearMarkers();
-        drawMarkers();
-        getAddressFromLocation(event.latLng)
-        .then(function(address) {
-          addresses.push(address);
-        }, function(err) {
-          console.log(err);
-        });
+        addPoint(event.latLng)
       });
     }
   };
+
+  function addPoint(location){
+    locations.push(location);
+    clearMarkers();
+    drawMarkers();
+    addAddressFromLocation(location);
+  }
 
   function clearMarkers() {
     markers.forEach(function(marker){marker.setMap(null);});
@@ -88,8 +89,8 @@ app.factory('GMFactory', ['$http', '$q', function ($http, $q) {
     })
   };
 
-  function getAddressFromLocation(location) {
-    return $q(function(resolve, reject) {
+  function addAddressFromLocation(location) {
+    var promise = $q(function(resolve, reject) {
       var geocoder = new google.maps.Geocoder();             
 
       geocoder.geocode({'latLng': location}, function (results, status) {
@@ -103,13 +104,16 @@ app.factory('GMFactory', ['$http', '$q', function ($http, $q) {
         }   
       });
     });
+    promise.then(function(address) {
+      addresses.push(address);
+    }, function(err) {
+      console.log(err);
+    });
   }
 
   function getAddresses(){
     return addresses;
   };
-
-  function optimizeRoute(){}
 
   var directionsService = new google.maps.DirectionsService();
   var directionsDisplay = new google.maps.DirectionsRenderer();
@@ -171,11 +175,10 @@ app.factory('GMFactory', ['$http', '$q', function ($http, $q) {
             for (var j = 0; j < results.length; j++) {
               var element = results[j];
               var distance = element.distance.value/1000;
-              var duration = element.duration.text;
-              var From = origins[i];
-              var to = destinations[j];
-
-              // console.log(distance, duration, From, to);
+              // var duration = element.duration.text;
+              // var From = origins[i];
+              // var to = destinations[j];
+              if (i == j) { distance = Infinity}
               tmp.push(distance);
             }
             matrix.push(tmp);
@@ -186,17 +189,46 @@ app.factory('GMFactory', ['$http', '$q', function ($http, $q) {
         }
       });
     });
-    
-    promise.then(function(results){matrixDistances = results});
+
+    promise.then(function(results){matrixDistances = results}, function(err) {console.log(err);});
   };
 
   function getMatrixDistances(){
     return matrixDistances;
   }
 
+  function optimizeRoute(){
+    SearchFactory.nearestNeighbour(matrixDistances);
+  };
   
+  function testData1(){
+    var location1  = new google.maps.LatLng(49.843512, 24.026664);
+    var location2  = new google.maps.LatLng(49.833356, 24.038725);
+    var location3  = new google.maps.LatLng(49.837229, 24.017517);
+
+    addPoint(location1);
+    addPoint(location2);
+    addPoint(location3);
+  };
+
+  function testData2(){
+    var location1  = new google.maps.LatLng(49.839683, 24.029717);
+    var location2  = new google.maps.LatLng(50.4501, 30.5234);
+    var location3  = new google.maps.LatLng(48.2920787, 25.9358367);
+    var location4  = new google.maps.LatLng(49.233083, 28.468217);
+    var location5  = new google.maps.LatLng(48.6208, 22.287883);
+
+    addPoint(location1);
+    addPoint(location2);
+    addPoint(location3);
+    addPoint(location4);
+    addPoint(location5);
+  };
+
   var factory = {
     initialize: initialize,
+    testData1: testData1,
+    testData2: testData2,
     clearMap: clearMap,
     getAddresses: getAddresses,
     calculateRoute: calculateRoute,
@@ -211,6 +243,15 @@ app.factory('GMFactory', ['$http', '$q', function ($http, $q) {
 
 
 app.factory('SearchFactory', ['$http', function ($http) {
-  var factory = {};
+  function nearestNeighbour(matrix){
+    for (var i=0; i<matrix.length; i++){
+      for (var j=0; j<matrix[i].length; j++)
+        console.log(matrix[i][j]);
+    }
+  }
+
+  var factory = {
+    nearestNeighbour: nearestNeighbour,
+  };
   return factory;
 }]);
