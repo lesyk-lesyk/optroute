@@ -25,6 +25,7 @@ app.controller('searchController', ['$scope', 'SearchFactory', 'GMFactory', func
   $scope.getAddresses = GMFactory.getAddresses;
   $scope.calculateRoute = GMFactory.calculateRoute;
   $scope.optimizeRoute = GMFactory.optimizeRoute;
+  $scope.getMatrixDistances = GMFactory.getMatrixDistances;
 
 }]); 
 
@@ -34,6 +35,7 @@ app.factory('GMFactory', ['$http', '$q', function ($http, $q) {
   var locations = [];
   var addresses = [];
   var markers = [];
+  var matrixDistances = [];
 
   var geocoder  = new google.maps.Geocoder();
 
@@ -147,14 +149,29 @@ app.factory('GMFactory', ['$http', '$q', function ($http, $q) {
     });
   }
 
+  function getMatrixDistances(){
+    $http.get('https://maps.googleapis.com/maps/api/distancematrix/json', {
+        params: {
+          origins: 'Vancouver+BC|Seattle',
+          destinations: 'San+Francisco|Victoria+BC',
+          mode: 'bicycling',
+          language: 'fr-FR',
+          key: 'AIzaSyDfpqqd6ZpLG1Y0x-Y_OFLZTA8X1LROw70'
+        }
+      })
+      .then(function(response) {
+        console.log(response.data);
+      });
+  };
 
-
+  
   var factory = {
     initialize: initialize,
     clearMap: clearMap,
     getAddresses: getAddresses,
     calculateRoute: calculateRoute,
-    optimizeRoute: optimizeRoute
+    optimizeRoute: optimizeRoute,
+    getMatrixDistances: getMatrixDistances
   };
   return factory;
 
