@@ -23,6 +23,8 @@ app.controller('searchController', ['$scope', 'SearchFactory', 'GMFactory', func
 
   $scope.clearMap = GMFactory.clearMap;
   $scope.getAddresses = GMFactory.getAddresses;
+  $scope.calculateRoute = GMFactory.calculateRoute;
+  $scope.optimizeRoute = GMFactory.optimizeRoute;
 
 }]); 
 
@@ -44,7 +46,7 @@ app.factory('GMFactory', ['$http', '$q', function ($http, $q) {
         zoom: 15,
         center: myLatLng
       });
-
+      directionsDisplay.setMap(map);
       google.maps.event.addListener(map, 'click', function(event) {
         locations.push(event.latLng);
         clearMarkers();
@@ -68,6 +70,7 @@ app.factory('GMFactory', ['$http', '$q', function ($http, $q) {
     clearMarkers();
     locations = [];
     addresses = [];
+    directionsDisplay.setMap(null); //Доробити видалення
   }
 
   function drawMarkers(){
@@ -102,10 +105,56 @@ app.factory('GMFactory', ['$http', '$q', function ($http, $q) {
     return addresses;
   };
 
+  function optimizeRoute(){}
+
+  var directionsService = new google.maps.DirectionsService();
+  var directionsDisplay = new google.maps.DirectionsRenderer();
+
+  function calculateRoute() {
+    directionsDisplay.setMap(map);
+    clearMarkers();
+    var start = locations[0];
+    var end = locations[0];   
+    var waypts = [];
+    var selectedMode = document.getElementById('mode').value;
+    for (var i = 1; i < locations.length; i++) {
+      waypts.push({
+        location:locations[i],
+        stopover:true
+      });
+    }
+    var request = {
+      origin:start,
+      destination:end,
+      travelMode: google.maps.TravelMode[selectedMode],
+      waypoints: waypts
+    };
+    directionsService.route(request, function(response, status) {
+      if (status == google.maps.DirectionsStatus.OK) {
+        directionsDisplay.setDirections(response);
+        
+        var route = response.routes[0];
+        var totalLength=0;
+        var totalDuration=0;
+        for (var i = 0; i < route.legs.length; i++) {
+          var routeSegment = i + 1;        
+          totalLength+=route.legs[i].distance.value;
+          totalDuration+=route.legs[i].duration.value;
+        }
+        console.log("Довжина початкового маршруту: ", totalLength/1000, "km");
+        console.log("Тривалість початкового маршруту: ", totalDuration/60, "m");
+      }
+    });
+  }
+
+
+
   var factory = {
     initialize: initialize,
     clearMap: clearMap,
-    getAddresses: getAddresses
+    getAddresses: getAddresses,
+    calculateRoute: calculateRoute,
+    optimizeRoute: optimizeRoute
   };
   return factory;
 

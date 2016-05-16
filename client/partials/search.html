@@ -21,7 +21,23 @@
 
 <div class="row">
   <div col-sm-12>
-    <h3>Results...</h3>
+    <br />
+    <form role="form">
+      <div class="form-group">
+        <label for="mode">Select trip type:</label>
+        <select class="form-control" id="mode">
+          <option value="DRIVING">Driving</option>
+          <option value="WALKING">Walking</option>
+          <option value="BICYCLING">Bicycling</option>
+          <option value="TRANSIT">Transit</option>
+        </select>
+      </div>
+    </form>
+
     <button ng-click="clearMap()">clearMap</button>
+    <button ng-click="calculateRoute()">calculateRoute</button>
+    <button ng-click="optimizeRoute()">optimizeRoute</button>
+    <h3>Results...</h3>
+    
   </div>
 </div>
