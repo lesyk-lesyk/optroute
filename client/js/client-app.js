@@ -150,18 +150,34 @@ app.factory('GMFactory', ['$http', '$q', function ($http, $q) {
   }
 
   function getMatrixDistances(){
-    $http.get('https://maps.googleapis.com/maps/api/distancematrix/json', {
-        params: {
-          origins: 'Vancouver+BC|Seattle',
-          destinations: 'San+Francisco|Victoria+BC',
-          mode: 'bicycling',
-          language: 'fr-FR',
-          key: 'AIzaSyDfpqqd6ZpLG1Y0x-Y_OFLZTA8X1LROw70'
+    var service = new google.maps.DistanceMatrixService();
+    var selectedMode = document.getElementById('mode').value;
+    service.getDistanceMatrix(
+      {
+        origins: locations,
+        destinations: locations,
+        travelMode: google.maps.TravelMode[selectedMode]
+      }, callback);
+
+    function callback(response, status) {
+      if (status == google.maps.DistanceMatrixStatus.OK) {
+        var origins = response.originAddresses;
+        var destinations = response.destinationAddresses;
+
+        for (var i = 0; i < origins.length; i++) {
+          var results = response.rows[i].elements;
+          for (var j = 0; j < results.length; j++) {
+            var element = results[j];
+            var distance = element.distance.text;
+            var duration = element.duration.text;
+            var From = origins[i];
+            var to = destinations[j];
+
+            console.log(distance, duration, From, to);
+          }
         }
-      })
-      .then(function(response) {
-        console.log(response.data);
-      });
+      }
+    }
   };
 
   
