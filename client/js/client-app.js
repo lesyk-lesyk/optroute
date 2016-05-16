@@ -25,6 +25,7 @@ app.controller('searchController', ['$scope', 'SearchFactory', 'GMFactory', func
   $scope.getAddresses = GMFactory.getAddresses;
   $scope.calculateRoute = GMFactory.calculateRoute;
   $scope.optimizeRoute = GMFactory.optimizeRoute;
+  $scope.calculateMatrixDistances = GMFactory.calculateMatrixDistances;
   $scope.getMatrixDistances = GMFactory.getMatrixDistances;
 
 }]); 
@@ -72,6 +73,7 @@ app.factory('GMFactory', ['$http', '$q', function ($http, $q) {
     clearMarkers();
     locations = [];
     addresses = [];
+    matrixDistances = [];
     directionsDisplay.setMap(null); //Доробити видалення
   }
 
@@ -149,36 +151,48 @@ app.factory('GMFactory', ['$http', '$q', function ($http, $q) {
     });
   }
 
-  function getMatrixDistances(){
-    var service = new google.maps.DistanceMatrixService();
-    var selectedMode = document.getElementById('mode').value;
-    service.getDistanceMatrix(
-      {
-        origins: locations,
-        destinations: locations,
-        travelMode: google.maps.TravelMode[selectedMode]
-      }, callback);
+  function calculateMatrixDistances(){
+    var promise = $q(function(resolve, reject) {
+      var service = new google.maps.DistanceMatrixService();
+      var selectedMode = document.getElementById('mode').value;
+      var matrix=[];
+      service.getDistanceMatrix({
+          origins: locations,
+          destinations: locations,
+          travelMode: google.maps.TravelMode[selectedMode]
+        }, function (response, status) {
+        if (status == google.maps.DistanceMatrixStatus.OK) {
+          var origins = response.originAddresses;
+          var destinations = response.destinationAddresses;
 
-    function callback(response, status) {
-      if (status == google.maps.DistanceMatrixStatus.OK) {
-        var origins = response.originAddresses;
-        var destinations = response.destinationAddresses;
+          for (var i = 0; i < origins.length; i++) {
+            var results = response.rows[i].elements;
+            var tmp = [];
+            for (var j = 0; j < results.length; j++) {
+              var element = results[j];
+              var distance = element.distance.value/1000;
+              var duration = element.duration.text;
+              var From = origins[i];
+              var to = destinations[j];
 
-        for (var i = 0; i < origins.length; i++) {
-          var results = response.rows[i].elements;
-          for (var j = 0; j < results.length; j++) {
-            var element = results[j];
-            var distance = element.distance.text;
-            var duration = element.duration.text;
-            var From = origins[i];
-            var to = destinations[j];
-
-            console.log(distance, duration, From, to);
+              // console.log(distance, duration, From, to);
+              tmp.push(distance);
+            }
+            matrix.push(tmp);
           }
+          resolve(matrix);
+        } else {
+          reject(status);
         }
-      }
-    }
+      });
+    });
+    
+    promise.then(function(results){matrixDistances = results});
   };
+
+  function getMatrixDistances(){
+    return matrixDistances;
+  }
 
   
   var factory = {
@@ -187,6 +201,7 @@ app.factory('GMFactory', ['$http', '$q', function ($http, $q) {
     getAddresses: getAddresses,
     calculateRoute: calculateRoute,
     optimizeRoute: optimizeRoute,
+    calculateMatrixDistances: calculateMatrixDistances,
     getMatrixDistances: getMatrixDistances
   };
   return factory;
