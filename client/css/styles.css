@@ -103,3 +103,21 @@ textarea {
   width: 180px;
   margin-bottom: 8px;
 }
+
+
+
+table {
+  width: 100%;
+}
+thead, tbody, tr, td, th { display: block; }
+tr:after {
+  content: ' ';
+  display: block;
+  visibility: hidden;
+  clear: both;
+}
+tbody {
+  max-height: 380px;
+/*  height: 400px;*/
+  overflow-y: auto;
+}
