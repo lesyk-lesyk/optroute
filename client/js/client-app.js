@@ -150,7 +150,7 @@ app.factory('GMFactory', ['$http', '$q', 'SearchFactory', function ($http, $q, S
           totalDuration+=route.legs[i].duration.value;
         }
         console.log("Довжина початкового маршруту: ", totalLength/1000, "km");
-        console.log("Тривалість початкового маршруту: ", totalDuration/60, "m");
+        // console.log("Тривалість початкового маршруту: ", totalDuration/60, "m");
       }
     });
   }
@@ -188,7 +188,7 @@ app.factory('GMFactory', ['$http', '$q', 'SearchFactory', function ($http, $q, S
           totalDuration+=route.legs[i].duration.value;
         }
         console.log("Довжина Оптимізованого маршруту: ", totalLength/1000, "km");
-        console.log("Тривалість Оптимізованого маршруту: ", totalDuration/60, "m");
+        // console.log("Тривалість Оптимізованого маршруту: ", totalDuration/60, "m");
       }
     });
   }

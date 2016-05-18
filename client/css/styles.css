@@ -46,8 +46,8 @@ textarea {
 }
 
 
-.height440 {
-    height: 440px;
+.map-height {
+    height: 435px;
 }
 
 
@@ -56,6 +56,12 @@ textarea {
 }
 .dl-horizontal dd {
   margin-bottom: 4px;
+}
+
+@media (max-width: 768px) {
+  .map-height {
+      height: 220px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -106,18 +112,26 @@ textarea {
 
 
 
-table {
+#address table {
   width: 100%;
 }
-thead, tbody, tr, td, th { display: block; }
-tr:after {
+#address thead, #address tbody, #address tr, #address td, #address th { display: block; }
+#address tr:after {
   content: ' ';
   display: block;
   visibility: hidden;
   clear: both;
 }
-tbody {
-  max-height: 380px;
-/*  height: 400px;*/
+#address tbody {
+  max-height: 375px;
   overflow-y: auto;
+}
+
+#mode{
+  width: 95px;
+  display: inline;
+}
+
+.margin-bottom{
+  margin-bottom: 8px;
 }

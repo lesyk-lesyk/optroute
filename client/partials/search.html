@@ -1,13 +1,13 @@
 <br />
 <div class="row">
-  <div class="col-md-8 col-xs-12 height440">
+  <div class="col-md-8 col-xs-12 map-height">
     <div id="map" style="width:100%; height:100%"></div>
   </div>
   <div class="col-md-4 col-xs-12" >
-    <table class="table table-hover">
+    <table class="table table-hover" id="address">
         <thead>
           <tr>
-            <th class="text-center">Addresses</th>
+            <th class="text-center">Origin Addresses</th>
           </tr>
         </thead>
         <tbody>
@@ -22,12 +22,12 @@
   </div>
 </div>
 
+<br />
 <div class="row">
-  <div col-xs-12>
-    <br />
-    <form class="form-inline" role="form">
-      <div class="form-group">
-        <label for="mode">Select trip type:</label>
+  <div class="col-xs-12 col-md-8 text-center">
+    <div class="row">
+      <div class="col-xs-12 col-sm-3 margin-bottom">
+        <label for="mode">Type:</label>
         <select class="form-control" id="mode">
           <option value="DRIVING">Driving</option>
           <option value="WALKING">Walking</option>
@@ -35,27 +35,44 @@
           <option value="TRANSIT">Transit</option>
         </select>
       </div>
-      <div class="form-group">
-        <button ng-click="testData1()" class="btn btn-default">Test Data 1</button>
-        <button ng-click="testData2()" class="btn btn-default">Test Data 2</button>
-        <button ng-click="testData3()" class="btn btn-default">Test Data 3</button>
-        <button ng-click="clearMap()" class="btn btn-default">Сlear Map</button>
-        <button ng-click="calculateRoute()" class="btn btn-default">calculateRoute</button>
-        <button ng-click="calculateMatrixDistances()" class="btn btn-default">calculateMatrixDistances</button>
-        <button ng-click="optimizeRoute()" class="btn btn-default">Nearest Neighbour</button>
-        <button ng-click="findBFRoute()" class="btn btn-default">Brute Force</button>
+      <div class="col-xs-12 col-sm-4 margin-bottom">
+        <button ng-click="testData1()" class="btn btn-default">Test 1</button>
+        <button ng-click="testData2()" class="btn btn-default">Test 2</button>
+        <button ng-click="testData3()" class="btn btn-default">Test 3</button>
       </div>
-    </form>
+      <div class="col-xs-12 col-sm-5 margin-bottom">
+        <button ng-click="calculateRoute()" class="btn btn-success">
+        Calculate original Route</button>
+        <button ng-click="clearMap()" class="btn btn-warning">Сlear All</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <table class="table table-hover text-center">
+
+<br />
+<div class="row">
+  <div class="col-xs-12 col-md-8 text-center">
+    <hr />
+    <h2>Optimisation</h2>
+    <button ng-click="calculateMatrixDistances()" class="btn btn-success">Calculate Matrix Distances</button>
+    <button ng-click="optimizeRoute()" class="btn btn-success">Nearest Neighbour</button>
+    <button ng-click="findBFRoute()" class="btn btn-success">Brute Force</button>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+    <table class="table table-hover text-center" ng-hide="getMatrixDistances().length==0">
       <caption class="text-center">Matrix Distances</caption>
-        <tbody>
-          <tr ng-repeat="row in getMatrixDistances()">
-            <td ng-repeat="data in row">{{data}}</td>
-          </tr>
-        </tbody>
+      <tbody>
+        <tr ng-repeat="row in getMatrixDistances()">
+          <td ng-repeat="data in row">{{data}}</td>
+        </tr>
+      </tbody>
     </table>
 
-    <span>BF time {{getBFTime()}}</span>
+<!--     <span>BF time {{getBFTime()}}</span> -->
   </div>
 </div>
