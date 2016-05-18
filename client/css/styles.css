@@ -46,6 +46,60 @@ textarea {
 }
 
 
-.height400 {
-    height: 400px;
+.height440 {
+    height: 440px;
+}
+
+
+.dl-horizontal dt {
+  margin-bottom: 4px;
+}
+.dl-horizontal dd {
+  margin-bottom: 4px;
+}
+
+@media (min-width: 768px) {
+  .dl-horizontal dt {
+    float: left;
+    width: 160px;
+    clear: left;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dl-horizontal dd {
+    margin-left: 180px;
+  }
+}
+
+@media (min-width: 350px) and (max-width: 767px) {
+  .dl-horizontal dt {
+    float: left;
+    width: 100px;
+    clear: left;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 4px;
+  }
+  .dl-horizontal dd {
+    margin-left: 120px;
+    margin-bottom: 4px;
+  }
+}
+
+@media (max-width: 349px) {
+  .dl-horizontal dt {
+    text-align: center;
+  }
+}
+
+.logos {
+  height: 90px;
+  margin-bottom: 12px;
+}
+
+.logos-horizontal {
+  width: 180px;
+  margin-bottom: 8px;
 }
