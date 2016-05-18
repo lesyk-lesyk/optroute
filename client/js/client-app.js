@@ -253,6 +253,7 @@ app.factory('GMFactory', ['$http', '$q', 'SearchFactory', function ($http, $q, S
   };
   
   function testData1(){
+    map.setZoom(14);
     var location1  = new google.maps.LatLng(49.843512, 24.026664);
     var location2  = new google.maps.LatLng(49.833356, 24.038725);
     var location3  = new google.maps.LatLng(49.837229, 24.017517);
@@ -267,6 +268,7 @@ app.factory('GMFactory', ['$http', '$q', 'SearchFactory', function ($http, $q, S
   };
 
   function testData2(){
+    map.setZoom(6);
     var location1  = new google.maps.LatLng(49.839683, 24.029717);
     var location2  = new google.maps.LatLng(50.4501, 30.5234);
     var location3  = new google.maps.LatLng(48.2920787, 25.9358367);
@@ -283,6 +285,7 @@ app.factory('GMFactory', ['$http', '$q', 'SearchFactory', function ($http, $q, S
   };
 
   function testData3(){
+    map.setZoom(5);
     var location1  = new google.maps.LatLng(49.839683, 24.029717);
     var location2  = new google.maps.LatLng(50.4501, 30.5234);
     var location3  = new google.maps.LatLng(48.2920787, 25.9358367);
