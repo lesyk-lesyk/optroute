@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { HomeComponent } from './home/home.component';
+import { SearchRouteComponent } from './search-route/search-route.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { HomeComponent } from './home/home.component';
   ],
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    SearchRouteComponent
   ],
   providers: [],
   bootstrap: [ AppComponent ]
