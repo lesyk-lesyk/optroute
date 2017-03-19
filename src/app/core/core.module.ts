@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 
 /* Components */
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   ],
   declarations: [
     NavbarComponent,
+    PageNotFoundComponent,
   ],
   exports: [
     NavbarComponent,
