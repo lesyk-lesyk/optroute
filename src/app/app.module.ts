@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { HomeComponent } from './home/home.component';
+import { HomePageComponent } from './home-page/home-page.component';
 import { SearchRouteComponent } from './search-route/search-route.component';
 
 @NgModule({
@@ -17,7 +17,7 @@ import { SearchRouteComponent } from './search-route/search-route.component';
   ],
   declarations: [
     AppComponent,
-    HomeComponent,
+    HomePageComponent,
     SearchRouteComponent
   ],
   providers: [],
