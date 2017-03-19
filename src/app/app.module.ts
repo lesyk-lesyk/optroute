@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { HomePageComponent } from './home-page/home-page.component';
 import { SearchRouteComponent } from './search-route/search-route.component';
+import { GmapModule } from './gmap/gmap.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    CoreModule
+    CoreModule,
+    GmapModule
   ],
   declarations: [
     AppComponent,
