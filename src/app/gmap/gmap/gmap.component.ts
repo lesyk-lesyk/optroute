@@ -7,8 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GmapComponent implements OnInit {
 
+  options: any;
+
+  overlays: any[];
+
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.options = {
+      center: { lat: 36.890257, lng: 30.707417 },
+      zoom: 12
+    };
+  }
 
 }
