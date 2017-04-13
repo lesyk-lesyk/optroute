@@ -25,5 +25,4 @@ import { GmapModule } from './gmap/gmap.module';
   providers: [],
   bootstrap: [ AppComponent ]
 })
-export class AppModule {
-}
+export class AppModule { }

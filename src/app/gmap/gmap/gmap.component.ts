@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'g-map',
+  selector: 'app-g-map',
   templateUrl: './gmap.component.html',
   styleUrls: ['./gmap.component.css']
 })
