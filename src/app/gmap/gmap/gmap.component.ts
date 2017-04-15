@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-g-map',
   templateUrl: './gmap.component.html',
-  styleUrls: ['./gmap.component.css']
+  styleUrls: ['./gmap.component.scss']
 })
 export class GmapComponent implements OnInit {
 
@@ -15,7 +15,7 @@ export class GmapComponent implements OnInit {
 
   ngOnInit() {
     this.options = {
-      center: { lat: 36.890257, lng: 30.707417 },
+      center: { lat: 49.8397, lng: 24.0297 },
       zoom: 12
     };
   }
