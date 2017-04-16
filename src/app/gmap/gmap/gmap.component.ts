@@ -16,7 +16,11 @@ export class GmapComponent implements OnInit {
 
   map: google.maps.Map;
 
-  constructor(private gMapApiClientService: GMapApiClientService) { }
+  directionsDisplay: google.maps.DirectionsRenderer;
+
+  constructor(private gMapApiClientService: GMapApiClientService) {
+    this.directionsDisplay = new google.maps.DirectionsRenderer();
+  }
 
   ngOnInit() {
     this.options = {
@@ -27,7 +31,7 @@ export class GmapComponent implements OnInit {
     this.initOverlays();
   }
 
-  initOverlays() {
+  initOverlays(): void {
     if (!this.overlays || !this.overlays.length) {
       this.overlays = [
         new google.maps.Marker({ position: { lat: 49.840611, lng: 24.022510 } }),
@@ -39,17 +43,16 @@ export class GmapComponent implements OnInit {
     }
   }
 
-  setMap(event) {
+  setMap(event): void {
     this.map = event.map;
+    this.directionsDisplay.setMap(event.map);
   }
 
-  handleMapClick(event) {
+  handleMapClick(event): void {
     this.addMarker(event.latLng);
   }
 
-  addMarker(latLng) {
-    console.log(this.overlays);
-
+  addMarker(latLng): void {
     this.overlays.push(new google.maps.Marker({
       position: {
         lat: latLng.lat(),
@@ -59,9 +62,10 @@ export class GmapComponent implements OnInit {
     }));
   }
 
-  buildRoute() {
-    console.log('buildRoute');
-    this.gMapApiClientService.getRoute(this.overlays[0].getPosition(), this.overlays[1].getPosition());
+  buildRoute(): void {
+    this.gMapApiClientService.getRoute('Lviv', 'Sambir')
+      .then((response: google.maps.DirectionsResult) => {
+        this.directionsDisplay.setDirections(response);
+      });
   }
-
 }
