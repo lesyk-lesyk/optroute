@@ -1,6 +1,7 @@
 /// <reference path='../../../../node_modules/@types/google-maps/index.d.ts' />
-
 import { Component, OnInit } from '@angular/core';
+
+import { GMapApiClientService } from 'app/gmap/services/gmap-api-client.service';
 
 @Component({
   selector: 'app-g-map',
@@ -8,21 +9,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./gmap.component.scss']
 })
 export class GmapComponent implements OnInit {
-  
+
   options: any;
 
-  overlays: any[];
+  overlays: google.maps.Marker[];
 
   map: google.maps.Map;
 
-  constructor() { }
+  constructor(private gMapApiClientService: GMapApiClientService) { }
 
   ngOnInit() {
     this.options = {
       center: { lat: 49.8397, lng: 24.0297 },
       zoom: 14
     };
-    
+
     this.initOverlays();
   }
 
@@ -40,7 +41,6 @@ export class GmapComponent implements OnInit {
 
   setMap(event) {
     this.map = event.map;
-    console.log('setMap', event.map);
   }
 
   handleMapClick(event) {
@@ -49,7 +49,7 @@ export class GmapComponent implements OnInit {
 
   addMarker(latLng) {
     console.log(this.overlays);
-    
+
     this.overlays.push(new google.maps.Marker({
       position: {
         lat: latLng.lat(),
@@ -60,7 +60,8 @@ export class GmapComponent implements OnInit {
   }
 
   buildRoute() {
-    console.log(this.map);
+    console.log('buildRoute');
+    this.gMapApiClientService.getRoute(this.overlays[0].getPosition(), this.overlays[1].getPosition());
   }
 
 }
