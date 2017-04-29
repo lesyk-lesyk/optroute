@@ -2,3 +2,13 @@
 body {
   padding-top: 50px;
 }
+
+.v-align-containter {
+	display: table;
+	height: 100%;
+}
+.v-align-item {
+	display: table-cell;
+  vertical-align: middle;
+	float: none;
+}
