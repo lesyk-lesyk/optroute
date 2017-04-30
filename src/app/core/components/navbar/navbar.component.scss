@@ -15,7 +15,16 @@
       text-shadow: 2px 2px 12px #000000;
     }
   }
+
+  .navbar-toggle {
+    background-color: #ddd;
+  }
+
+  .navbar-collapse {
+    border: none;
+  }
 }
+
 .hreflogo {
   padding: 0px;
   padding-top: 8px;
