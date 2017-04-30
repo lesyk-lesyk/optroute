@@ -1,4 +1,4 @@
-<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar navbar-default navbar-custom navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -13,17 +13,17 @@
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 				<li>
-					<a routerLink="/">
+					<a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
 						<span class="glyphicon glyphicon-home"></span>
 						<span>Home</span></a>
 				</li>
 				<li>
-					<a routerLink="/search-route">
+					<a routerLink="/search-route" routerLinkActive="active">
 						<span class="glyphicon glyphicon-search"></span>
 						<span>Search route</span></a>
 				</li>
 				<li>
-					<a routerLink="/about">
+					<a routerLink="/about" routerLinkActive="active">
 						<span class="glyphicon glyphicon-info-sign"></span>
 						<span>About</span></a>
 				</li>

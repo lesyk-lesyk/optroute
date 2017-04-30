@@ -1,3 +1,21 @@
+.navbar-custom {
+  background-color: #428bca;
+
+  li a {
+    color: #cdddeb;
+    transition: all 150ms ease;
+
+    &:hover {
+      color: white;
+      transform: translateY(-2px)
+    }
+
+    &.active {
+      color: white;
+      text-shadow: 2px 2px 12px #000000;
+    }
+  }
+}
 .hreflogo {
   padding: 0px;
   padding-top: 8px;
