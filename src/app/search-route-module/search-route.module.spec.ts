@@ -1,4 +1,4 @@
-import { SearchRouteModule}  from './search-route.module';
+import { SearchRouteModule } from './search-route.module';
 
 describe('SearchRouteModule', () => {
   let searchRouteModule;
@@ -9,5 +9,5 @@ describe('SearchRouteModule', () => {
 
   it('should create an instance', () => {
     expect(searchRouteModule).toBeTruthy();
-  })
+  });
 });

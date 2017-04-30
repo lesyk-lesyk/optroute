@@ -6,7 +6,7 @@ export class GMapApiClientService {
   private defaultTravelMode: google.maps.TravelMode = google.maps.TravelMode.WALKING;
   private directionsService: google.maps.DirectionsService;
 
-  constructor(private http: Http) {
+  constructor() {
     this.directionsService = new google.maps.DirectionsService();
   }
 

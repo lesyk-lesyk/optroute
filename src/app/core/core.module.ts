@@ -1,19 +1,21 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { HttpModule } from '@angular/http';
 
 // Components
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+
+// Pages
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 
 @NgModule({
   imports: [
-    RouterModule,
-    HttpModule
+    RouterModule
   ],
   declarations: [
     NavbarComponent,
     PageNotFoundComponent,
+    HomePageComponent
   ],
   exports: [
     NavbarComponent,
