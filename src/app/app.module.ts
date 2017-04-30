@@ -6,23 +6,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { HomePageComponent } from './home-page/home-page.component';
-import { SearchRouteComponent } from './search-route/search-route.component';
-import { GMapModule as PrimeGMapModule } from 'primeng/components/gmap/gmap';
-import { GMapModule } from './gmap/gmap.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    CoreModule,
-    PrimeGMapModule,
-    GMapModule
+    CoreModule
   ],
   declarations: [
     AppComponent,
-    HomePageComponent,
-    SearchRouteComponent
+    HomePageComponent
   ],
   providers: [],
   bootstrap: [ AppComponent ]
