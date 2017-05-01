@@ -6,3 +6,11 @@
 [class*=" col-"] {
   padding: 0;
 }
+
+.map-points-table {
+  .ui-datatable-emptymessage {
+    text-align: center;
+    font-style: italic;
+    color: gray;
+  }
+}

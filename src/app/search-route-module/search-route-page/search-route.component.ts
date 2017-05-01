@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { MapPoint } from './../models/map-point';
 import { GMapApiClientService } from 'app/gmap/services/gmap-api-client.service';
@@ -6,7 +6,8 @@ import { GMapApiClientService } from 'app/gmap/services/gmap-api-client.service'
 @Component({
   selector: 'app-search-route',
   templateUrl: './search-route.component.html',
-  styleUrls: ['./search-route.component.scss']
+  styleUrls: ['./search-route.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class SearchRouteComponent implements OnInit {
 
@@ -32,6 +33,7 @@ export class SearchRouteComponent implements OnInit {
       new google.maps.Marker({ position: { lat: 49.836553, lng: 24.004382 } }))
   ];
   public mapPoints: MapPoint[] = [];
+  public emptyMapPointsMessage: string = 'Empty Addresses list. Please, click on map to add point.';
 
   constructor(private gMapApiClientService: GMapApiClientService) {
     this.directionsDisplay = new google.maps.DirectionsRenderer();

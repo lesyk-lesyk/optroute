@@ -10,7 +10,12 @@
       </p-gmap>
     </div>
     <div class="col-sm-5">
-      <p-dataTable [value]="mapPoints">
+      <p-dataTable 
+            class="map-points-table"
+            [value]="mapPoints" 
+            [emptyMessage]="emptyMapPointsMessage"
+            scrollable="true" 
+            scrollHeight="350px">
           <p-column field="address" header="Addresses"></p-column>
       </p-dataTable>
     </div>
