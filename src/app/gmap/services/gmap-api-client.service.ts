@@ -12,13 +12,13 @@ export class GMapApiClientService {
     this.geocoder = new google.maps.Geocoder();
   }
 
-  public getRoute(origin: any,
-                  destination: any,
-                  travelMode: google.maps.TravelMode = this.defaultTravelMode,
-                  waypoints: any[] = []): Promise<any> {
+  public getRoute(origin: google.maps.LatLng,
+                  destination: google.maps.LatLng,
+                  waypoints: google.maps.DirectionsWaypoint[] = [],
+                  travelMode: google.maps.TravelMode = this.defaultTravelMode): Promise<any> {
 
     const request: google.maps.DirectionsRequest = { origin, destination, travelMode, waypoints };
-
+    
     return new Promise((resolve, reject) => {
       this.directionsService.route(request, (response, status) => {
         if (status === google.maps.DirectionsStatus.OK) {

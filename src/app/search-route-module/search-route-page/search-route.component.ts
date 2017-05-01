@@ -54,10 +54,14 @@ export class SearchRouteComponent implements OnInit {
   }
 
   private renderOverlays(): void {
-    this.overlays = [];
+    let tempOverlays: google.maps.Marker[] = [];
+
     this.mapPoints.forEach(point => {
-      this.overlays.push(point.marker);
+      tempOverlays.push(point.marker);
     });
+
+    this.clearOverlays();
+    this.overlays = tempOverlays;
   }
 
   public setMap(event): void {
@@ -83,12 +87,22 @@ export class SearchRouteComponent implements OnInit {
     ));
 
     this.renderOverlays();
+    this.map.panTo(latLng);
   }
 
   public buildRoute(): void {
-    this.gMapApiClientService.getRoute('Lviv', 'Sambir')
+    const origin = this.mapPoints[0].marker.getPosition();
+    const destination = this.mapPoints.slice(-1)[0].marker.getPosition();
+
+    const waypoints: google.maps.DirectionsWaypoint[] = [];
+    this.mapPoints.slice(1, -1).forEach(point => {
+      waypoints.push({ location: point.marker.getPosition(), stopover: true });
+    });
+
+    this.gMapApiClientService.getRoute(origin, destination, waypoints)
       .then((response: google.maps.DirectionsResult) => {
         this.directionsDisplay.setDirections(response);
+        this.clearOverlays();
       });
   }
 
@@ -101,13 +115,27 @@ export class SearchRouteComponent implements OnInit {
   }
 
   public clear() {
-    this.overlays = [];
     this.mapPoints = [];
+    this.clearOverlays()
+    this.clearDirections();
+  }
+
+  private clearOverlays() {
+    this.overlays = [];
+  }
+
+  private clearDirections() {
+    this.directionsDisplay.setDirections({ routes: [] });
+  }
+
+  private resetMapOptions(){
+    this.map.setCenter(this.defautOptions.center);
+    this.map.setZoom(this.defautOptions.zoom);
   }
 
   public reset() {
-    this.map.setCenter(this.defautOptions.center);
-    this.map.setZoom(this.defautOptions.zoom);
+    this.resetMapOptions();
+    this.clearDirections();
     this.initDefaultData();
     this.renderOverlays();
   }
