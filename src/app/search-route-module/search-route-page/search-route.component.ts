@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { MapPoint } from './../models/map-point';
 import { GMapApiClientService } from 'app/gmap/services/gmap-api-client.service';
 
 @Component({
@@ -16,39 +17,58 @@ export class SearchRouteComponent implements OnInit {
     zoom: 14
   };
   public options: { center, zoom };
-  public overlays: google.maps.Marker[];
+  public overlays: google.maps.Marker[] = [];
+
+  private defaultMapPoints: MapPoint[] = [
+    new MapPoint("Universytetska St, 1, L'viv Lviv Oblast, Ukraine, 79000", 
+      new google.maps.Marker({ position: { lat: 49.840611, lng: 24.022510 } })),
+    new MapPoint("Svobody Ave, 28, L'viv, Lviv Oblast, Ukraine, 79000",
+      new google.maps.Marker({ position: { lat: 49.844065, lng: 24.026242 } })),
+    new MapPoint("Chaikovs'koho Street, 7, L'viv, Lviv Oblast, Ukraine, 79000",
+      new google.maps.Marker({ position: { lat: 49.837548, lng: 24.030172 } })),
+    new MapPoint("Horodotska St, 36, L'viv, Lviv Oblast, Ukraine, 79000",
+      new google.maps.Marker({ position: { lat: 49.842089, lng: 24.016398 } })),
+    new MapPoint("Kropyvnyts'koho Square, 1 L'viv, Lviv Oblast, Ukraine 79000",
+      new google.maps.Marker({ position: { lat: 49.836553, lng: 24.004382 } }))
+  ];
+  public mapPoints: MapPoint[] = [];
 
   constructor(private gMapApiClientService: GMapApiClientService) {
     this.directionsDisplay = new google.maps.DirectionsRenderer();
   }
 
   ngOnInit() {
+    this.initDefaultOptions();
+    this.initDefaultData();
+    this.renderOverlays();
+  }
+
+  private initDefaultData(): void {
+    this.mapPoints = this.defaultMapPoints.slice();
+  }
+
+  private initDefaultOptions(): void {
     this.options = Object.assign({}, this.defautOptions);
-    this.initOverlays();
   }
 
-  initOverlays(): void {
+  private renderOverlays(): void {
     if (!this.overlays || !this.overlays.length) {
-      this.overlays = [
-        new google.maps.Marker({ position: { lat: 49.840611, lng: 24.022510 } }),
-        new google.maps.Marker({ position: { lat: 49.844065, lng: 24.026242 } }),
-        new google.maps.Marker({ position: { lat: 49.837548, lng: 24.030172 } }),
-        new google.maps.Marker({ position: { lat: 49.842089, lng: 24.016398 } }),
-        new google.maps.Marker({ position: { lat: 49.836553, lng: 24.004382 } })
-      ];
-    }
+      this.mapPoints.forEach(point => {
+        this.overlays.push(point.marker);
+      });
+    };
   }
 
-  setMap(event): void {
+  public setMap(event): void {
     this.map = event.map;
     this.directionsDisplay.setMap(event.map);
   }
 
-  handleMapClick(event): void {
+  public handleMapClick(event): void {
     this.addMarker(event.latLng);
   }
 
-  addMarker(latLng): void {
+  private addMarker(latLng): void {
     this.overlays.push(new google.maps.Marker({
       position: {
         lat: latLng.lat(),
@@ -75,11 +95,13 @@ export class SearchRouteComponent implements OnInit {
 
   public clear() {
     this.overlays = [];
+    this.mapPoints = [];
   }
 
   public reset() {
     this.map.setCenter(this.defautOptions.center);
     this.map.setZoom(this.defautOptions.zoom);
-    this.initOverlays();
+    this.initDefaultData();
+    this.renderOverlays();
   }
 }

@@ -10,7 +10,9 @@
       </p-gmap>
     </div>
     <div class="col-sm-5">
-      Table
+      <p-dataTable [value]="mapPoints">
+          <p-column field="address" header="Addresses"></p-column>
+      </p-dataTable>
     </div>
   </div>
   <div class="col-sm-7 text-right">
