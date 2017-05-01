@@ -20,15 +20,15 @@ export class SearchRouteComponent implements OnInit {
   public overlays: google.maps.Marker[] = [];
 
   private defaultMapPoints: MapPoint[] = [
-    new MapPoint(`Universytetska St, 1, L'viv Lviv Oblast, Ukraine, 79000`,
+    new MapPoint(`Universytetska St, 1, L'viv Lviv Oblast, Ukraine`,
       new google.maps.Marker({ position: { lat: 49.840611, lng: 24.022510 } })),
-    new MapPoint(`Svobody Ave, 28, L'viv, Lviv Oblast, Ukraine, 79000`,
+    new MapPoint(`Svobody Ave, 28, L'viv, Lviv Oblast, Ukraine`,
       new google.maps.Marker({ position: { lat: 49.844065, lng: 24.026242 } })),
-    new MapPoint(`Chaikovs'koho Street, 7, L'viv, Lviv Oblast, Ukraine, 79000`,
+    new MapPoint(`Chaikovs'koho Street, 7, L'viv, Lviv Oblast, Ukraine`,
       new google.maps.Marker({ position: { lat: 49.837548, lng: 24.030172 } })),
-    new MapPoint(`Horodotska St, 36, L'viv, Lviv Oblast, Ukraine, 79000`,
+    new MapPoint(`Horodotska St, 36, L'viv, Lviv Oblast, Ukraine`,
       new google.maps.Marker({ position: { lat: 49.842089, lng: 24.016398 } })),
-    new MapPoint(`Kropyvnyts'koho Square, 1 L'viv, Lviv Oblast, Ukraine 79000`,
+    new MapPoint(`Kropyvnyts'koho Square, 1 L'viv, Lviv Oblast, Ukraine`,
       new google.maps.Marker({ position: { lat: 49.836553, lng: 24.004382 } }))
   ];
   public mapPoints: MapPoint[] = [];
@@ -64,12 +64,14 @@ export class SearchRouteComponent implements OnInit {
   }
 
   public handleMapClick(event): void {
-    this.addMarker(event.latLng);
+    this.gMapApiClientService.getAddress(event.latLng).then(address => {
+      this.addMapPoint(address, event.latLng);
+    });
   }
 
-  private addMarker(latLng): void {
+  private addMapPoint(address, latLng): void {
     this.mapPoints.push(new MapPoint(
-      'Address', new google.maps.Marker({
+      address, new google.maps.Marker({
         position: {
           lat: latLng.lat(),
           lng: latLng.lng()
