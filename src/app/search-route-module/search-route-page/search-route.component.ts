@@ -20,7 +20,7 @@ export class SearchRouteComponent implements OnInit {
   public overlays: google.maps.Marker[] = [];
 
   private defaultMapPoints: MapPoint[] = [
-    new MapPoint("Universytetska St, 1, L'viv Lviv Oblast, Ukraine, 79000", 
+    new MapPoint("Universytetska St, 1, L'viv Lviv Oblast, Ukraine, 79000",
       new google.maps.Marker({ position: { lat: 49.840611, lng: 24.022510 } })),
     new MapPoint("Svobody Ave, 28, L'viv, Lviv Oblast, Ukraine, 79000",
       new google.maps.Marker({ position: { lat: 49.844065, lng: 24.026242 } })),
@@ -52,11 +52,10 @@ export class SearchRouteComponent implements OnInit {
   }
 
   private renderOverlays(): void {
-    if (!this.overlays || !this.overlays.length) {
-      this.mapPoints.forEach(point => {
-        this.overlays.push(point.marker);
-      });
-    };
+    this.overlays = [];
+    this.mapPoints.forEach(point => {
+      this.overlays.push(point.marker);
+    });
   }
 
   public setMap(event): void {
@@ -69,13 +68,17 @@ export class SearchRouteComponent implements OnInit {
   }
 
   private addMarker(latLng): void {
-    this.overlays.push(new google.maps.Marker({
-      position: {
-        lat: latLng.lat(),
-        lng: latLng.lng()
-      },
-      draggable: false
-    }));
+    this.mapPoints.push(new MapPoint(
+      'Address', new google.maps.Marker({
+        position: {
+          lat: latLng.lat(),
+          lng: latLng.lng()
+        },
+        draggable: false
+      })
+    ));
+
+    this.renderOverlays();
   }
 
   public buildRoute(): void {
