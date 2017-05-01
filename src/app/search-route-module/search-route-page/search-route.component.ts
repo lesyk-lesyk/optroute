@@ -8,24 +8,22 @@ import { GMapApiClientService } from 'app/gmap/services/gmap-api-client.service'
   styleUrls: ['./search-route.component.scss']
 })
 export class SearchRouteComponent implements OnInit {
-options: any;
 
-  overlays: google.maps.Marker[];
-
-  map: google.maps.Map;
-
-  directionsDisplay: google.maps.DirectionsRenderer;
+  private map: google.maps.Map;
+  private directionsDisplay: google.maps.DirectionsRenderer;
+  private defautOptions: { center, zoom } = {
+    center: { lat: 49.8397, lng: 24.0297 },
+    zoom: 14
+  };
+  public options: { center, zoom };
+  public overlays: google.maps.Marker[];
 
   constructor(private gMapApiClientService: GMapApiClientService) {
     this.directionsDisplay = new google.maps.DirectionsRenderer();
   }
 
   ngOnInit() {
-    this.options = {
-      center: { lat: 49.8397, lng: 24.0297 },
-      zoom: 14
-    };
-
+    this.options = Object.assign({}, this.defautOptions);
     this.initOverlays();
   }
 
@@ -60,11 +58,28 @@ options: any;
     }));
   }
 
-  buildRoute(): void {
+  public buildRoute(): void {
     this.gMapApiClientService.getRoute('Lviv', 'Sambir')
       .then((response: google.maps.DirectionsResult) => {
         this.directionsDisplay.setDirections(response);
       });
   }
 
+  public zoomIn(map) {
+    this.map.setZoom(this.map.getZoom() + 1);
+  }
+
+  public zoomOut(map) {
+    this.map.setZoom(this.map.getZoom() - 1);
+  }
+
+  public clear() {
+    this.overlays = [];
+  }
+
+  public reset() {
+    this.map.setCenter(this.defautOptions.center);
+    this.map.setZoom(this.defautOptions.zoom);
+    this.initOverlays();
+  }
 }
