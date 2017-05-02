@@ -31,16 +31,16 @@ export class GMapApiClientService {
   }
 
   public getAddress(latlng: google.maps.LatLng): Promise<string> {
-    return new Promise((resolve, reject)=>{
+    return new Promise((resolve, reject) => {
       this.geocoder.geocode({ 'location': latlng }, function (results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
           if (results[0]) {
             resolve(results[0].formatted_address);
           } else {
-            reject('No results found')
+            reject({ summary: 'Geocoder failed', detail: 'No results found' })
           }
         } else {
-          reject('Geocoder failed due to: ' + status);
+          reject({ summary: 'Geocoder failed', detail: status });
         }
       });
     });

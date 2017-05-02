@@ -2,6 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { MapPoint } from './../models/map-point';
 import { GMapApiClientService } from 'app/gmap/services/gmap-api-client.service';
+import { NotificationsService } from 'app/notifications/services/notifications.service';
+import { Message } from 'primeng/components/common/api';
 
 @Component({
   selector: 'app-search-route',
@@ -35,7 +37,9 @@ export class SearchRouteComponent implements OnInit {
   public mapPoints: MapPoint[] = [];
   public emptyMapPointsMessage: string = 'Empty Addresses list. Please, click on map to add point.';
 
-  constructor(private gMapApiClientService: GMapApiClientService) {
+  constructor(
+      private gMapApiClientService: GMapApiClientService,
+      private notificationsService: NotificationsService) {
     this.directionsDisplay = new google.maps.DirectionsRenderer();
   }
 
@@ -70,9 +74,17 @@ export class SearchRouteComponent implements OnInit {
   }
 
   public handleMapClick(event): void {
-    this.gMapApiClientService.getAddress(event.latLng).then(address => {
-      this.addMapPoint(address, event.latLng);
-    });
+    this.gMapApiClientService.getAddress(event.latLng)
+      .then(address => {
+        this.addMapPoint(address, event.latLng);
+      })
+      .catch((error: Message) => {
+        this.notificationsService.showNotificationPopup({
+          severity: 'error',
+          summary: error.summary,
+          detail: error.detail
+        });
+      });
   }
 
   private addMapPoint(address, latLng): void {
