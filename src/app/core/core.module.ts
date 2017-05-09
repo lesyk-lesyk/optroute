@@ -9,6 +9,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 
+// Services
+import { FormatterService } from './services/formatter.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -22,7 +25,9 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
   exports: [
     NavbarComponent,
   ],
-  providers: []
+  providers: [
+    FormatterService
+  ]
 })
 
 export class CoreModule {
