@@ -8,9 +8,9 @@ describe('SearchRouteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchRouteComponent ]
+      declarations: [SearchRouteComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

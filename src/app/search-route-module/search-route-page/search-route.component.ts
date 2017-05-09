@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { MapPoint } from './../models/map-point';
 import { GMapApiClientService } from 'app/gmap/services/gmap-api-client.service';
+import { GMapCalculationsService } from 'app/gmap/services/gmap-calculations.service';
 import { NotificationsService } from 'app/notifications/services/notifications.service';
 import { Message } from 'primeng/components/common/api';
 
@@ -35,11 +36,12 @@ export class SearchRouteComponent implements OnInit {
       new google.maps.Marker({ position: { lat: 49.836553, lng: 24.004382 } }))
   ];
   public mapPoints: MapPoint[] = [];
-  public emptyMapPointsMessage: string = 'Empty Addresses list. Please, click on map to add point.';
+  public emptyMapPointsMessage = 'Empty Addresses list. Please, click on map to add point.';
 
   constructor(
       private gMapApiClientService: GMapApiClientService,
-      private notificationsService: NotificationsService) {
+      private notificationsService: NotificationsService,
+      private gMapCalculationsService: GMapCalculationsService) {
     this.directionsDisplay = new google.maps.DirectionsRenderer();
   }
 
@@ -58,7 +60,7 @@ export class SearchRouteComponent implements OnInit {
   }
 
   private renderOverlays(): void {
-    let tempOverlays: google.maps.Marker[] = [];
+    const tempOverlays: google.maps.Marker[] = [];
 
     this.mapPoints.forEach(point => {
       tempOverlays.push(point.marker);
@@ -114,6 +116,7 @@ export class SearchRouteComponent implements OnInit {
     this.gMapApiClientService.getRoute(origin, destination, waypoints)
       .then((response: google.maps.DirectionsResult) => {
         this.directionsDisplay.setDirections(response);
+        console.log(this.gMapCalculationsService.getRouteInfo(response.routes[0]));
         this.clearOverlays();
       });
   }
@@ -128,7 +131,7 @@ export class SearchRouteComponent implements OnInit {
 
   public clear() {
     this.mapPoints = [];
-    this.clearOverlays()
+    this.clearOverlays();
     this.clearDirections();
   }
 
@@ -140,7 +143,7 @@ export class SearchRouteComponent implements OnInit {
     this.directionsDisplay.setDirections({ routes: [] });
   }
 
-  private resetMapOptions(){
+  private resetMapOptions() {
     this.map.setCenter(this.defautOptions.center);
     this.map.setZoom(this.defautOptions.zoom);
   }

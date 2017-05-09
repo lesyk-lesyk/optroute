@@ -18,7 +18,7 @@ export class GMapApiClientService {
                   travelMode: google.maps.TravelMode = this.defaultTravelMode): Promise<any> {
 
     const request: google.maps.DirectionsRequest = { origin, destination, travelMode, waypoints };
-    
+
     return new Promise((resolve, reject) => {
       this.directionsService.route(request, (response, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
@@ -37,7 +37,7 @@ export class GMapApiClientService {
           if (results[0]) {
             resolve(results[0].formatted_address);
           } else {
-            reject({ summary: 'Geocoder failed', detail: 'No results found' })
+            reject({ summary: 'Geocoder failed', detail: 'No results found' });
           }
         } else {
           reject({ summary: 'Geocoder failed', detail: status });
