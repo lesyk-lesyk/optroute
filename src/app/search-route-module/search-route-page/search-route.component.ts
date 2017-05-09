@@ -115,9 +115,34 @@ export class SearchRouteComponent implements OnInit {
 
     this.gMapApiClientService.getRoute(origin, destination, waypoints)
       .then((response: google.maps.DirectionsResult) => {
+        this.notificationsService.showNotificationPopup({
+          severity: 'success',
+          summary: 'Build route',
+          detail: 'Success!'
+        });
         this.directionsDisplay.setDirections(response);
         console.log(this.gMapCalculationsService.getRouteInfo(response.routes[0]));
         this.clearOverlays();
+      })
+      .catch((error: Message) => {
+        this.notificationsService.showNotificationPopup({
+          severity: 'error',
+          summary: error.summary,
+          detail: error.detail
+        });
+      });
+
+    const locations = this.mapPoints.map(point => point.marker.getPosition());
+    this.gMapApiClientService.getDistanceMatrix(locations)
+      .then(matrix => {
+        console.log(matrix);
+      })
+      .catch((error: Message) => {
+        this.notificationsService.showNotificationPopup({
+          severity: 'error',
+          summary: error.summary,
+          detail: error.detail
+        });
       });
   }
 
