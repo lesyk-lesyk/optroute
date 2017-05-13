@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { TspOptModule } from './tsp-opt/tsp-opt.module';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { NotificationsModule } from './notifications/notifications.module';
     FormsModule,
     AppRoutingModule,
     CoreModule,
-    NotificationsModule
+    NotificationsModule,
+    TspOptModule,
   ],
   declarations: [
     AppComponent

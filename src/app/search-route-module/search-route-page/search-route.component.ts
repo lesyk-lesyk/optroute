@@ -5,6 +5,7 @@ import { GMapApiClientService } from 'app/gmap/services/gmap-api-client.service'
 import { GMapCalculationsService } from 'app/gmap/services/gmap-calculations.service';
 import { NotificationsService } from 'app/notifications/services/notifications.service';
 import { Message } from 'primeng/components/common/api';
+import { TspOptService } from 'app/tsp-opt/services/tsp-opt.service';
 
 @Component({
   selector: 'app-search-route',
@@ -41,7 +42,8 @@ export class SearchRouteComponent implements OnInit {
   constructor(
       private gMapApiClientService: GMapApiClientService,
       private notificationsService: NotificationsService,
-      private gMapCalculationsService: GMapCalculationsService) {
+      private gMapCalculationsService: GMapCalculationsService,
+      private tspOptService: TspOptService) {
     this.directionsDisplay = new google.maps.DirectionsRenderer();
   }
 
@@ -106,10 +108,10 @@ export class SearchRouteComponent implements OnInit {
 
   public buildRoute(): void {
     const origin = this.mapPoints[0].marker.getPosition();
-    const destination = this.mapPoints.slice(-1)[0].marker.getPosition();
+    const destination = origin;
 
     const waypoints: google.maps.DirectionsWaypoint[] = [];
-    this.mapPoints.slice(1, -1).forEach(point => {
+    this.mapPoints.slice(1).forEach(point => {
       waypoints.push({ location: point.marker.getPosition(), stopover: true });
     });
 
@@ -131,11 +133,52 @@ export class SearchRouteComponent implements OnInit {
           detail: error.detail
         });
       });
+  }
+
+  public optimiseRoute() {
+    console.log('Optimise Route');
 
     const locations = this.mapPoints.map(point => point.marker.getPosition());
     this.gMapApiClientService.getDistanceMatrix(locations)
       .then(matrix => {
-        console.log(matrix);
+        this.tspOptService.oprimizeRoute(matrix).then(result => {
+          console.log('optimise result', result);
+          this.buildOptRoute(result);
+        });
+      })
+      .catch((error: Message) => {
+        this.notificationsService.showNotificationPopup({
+          severity: 'error',
+          summary: error.summary,
+          detail: error.detail
+        });
+      });
+  }
+
+  /* TODO: should refactor buildOptRoute() and buildRoute() */
+  public buildOptRoute(order): void {
+    const origin = this.mapPoints[0].marker.getPosition();
+    const destination = origin;
+
+    const waypoints: google.maps.DirectionsWaypoint[] = [];
+
+    for (let i = 1; i < this.mapPoints.length; i++) {
+      waypoints.push({
+        location: this.mapPoints[order[i]].marker.getPosition(),
+        stopover: true
+      });
+    }
+
+    this.gMapApiClientService.getRoute(origin, destination, waypoints)
+      .then((response: google.maps.DirectionsResult) => {
+        this.notificationsService.showNotificationPopup({
+          severity: 'success',
+          summary: 'Build opt route',
+          detail: 'Success!'
+        });
+        this.directionsDisplay.setDirections(response);
+        console.log(this.gMapCalculationsService.getRouteInfo(response.routes[0]));
+        this.clearOverlays();
       })
       .catch((error: Message) => {
         this.notificationsService.showNotificationPopup({
