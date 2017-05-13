@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class BruteForceService {
 
-  public bruteForce(matrix) {
+  public optimize(matrix) {
     return new Promise((resolve, reject) => {
-      const order = [];
-      const permArr = [],
-        usedChars = [];
+
+      const permArr = [];
+      const usedChars = [];
 
       function permute(input) {
         let ch;
@@ -31,7 +31,7 @@ export class BruteForceService {
       const permutedArray = permute(arr);
       permutedArray.forEach(item => { item.push(0); item.unshift(0); });
 
-      let bestOrder = [];
+      let order = [];
       let minRoute = Infinity;
 
       for (let i = 0; i < permutedArray.length; i++) {
@@ -39,11 +39,11 @@ export class BruteForceService {
         for (let j = 0; j < permutedArray[i].length - 1; j++) {
           sum += matrix[permutedArray[i][j]][permutedArray[i][j + 1]];
         }
-        if (sum < minRoute) { minRoute = sum; bestOrder = permutedArray[i]; };
+        if (sum < minRoute) { minRoute = sum; order = permutedArray[i]; };
       }
-      bestOrder.pop();
+      order.pop();
 
-      resolve(bestOrder);
+      resolve(order);
     });
   }
 }

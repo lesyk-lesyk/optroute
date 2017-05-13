@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { TspOptService } from './services/tsp-opt.service';
 import { BruteForceService } from './algorithms/brute-force.service';
+import { NearestNeighbourService } from './algorithms/nearest-neighbour.service';
 
 @NgModule({
   imports: [
@@ -11,7 +12,8 @@ import { BruteForceService } from './algorithms/brute-force.service';
   declarations: [],
   providers: [
     TspOptService,
-    BruteForceService
+    BruteForceService,
+    NearestNeighbourService,
   ]
 })
 export class TspOptModule { }
