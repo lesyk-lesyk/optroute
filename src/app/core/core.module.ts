@@ -11,6 +11,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 
 // Services
 import { FormatterService } from './services/formatter.service';
+import { TreantTreeComponent } from './components/treant-tree/treant-tree.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { FormatterService } from './services/formatter.service';
   declarations: [
     NavbarComponent,
     PageNotFoundComponent,
-    HomePageComponent
+    HomePageComponent,
+    TreantTreeComponent
   ],
   exports: [
     NavbarComponent,
