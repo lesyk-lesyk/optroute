@@ -33,12 +33,12 @@ export class TspOptService {
       // this.heldKarpService.optimize(matrix).then(order => {
       //   resolve(order);
       // });
-      // this.dynamicProgrammingService.optimize(matrix).then(order => {
-      //   resolve(order);
-      // });
-      this.geneticService.optimize(matrix).then(order => {
+      this.dynamicProgrammingService.optimize(matrix).then(order => {
         resolve(order);
       });
+      // this.geneticService.optimize(matrix).then(order => {
+      //   resolve(order);
+      // });
     });
   }
 }

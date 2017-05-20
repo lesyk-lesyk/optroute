@@ -42,7 +42,7 @@ export class DynamicProgrammingService {
 
     let inputArray = this.matrix;
     this.N = this.n;
-    this.npow = this.helpersService.power(2, this.N);
+    this.npow = Math.pow(2, this.N);
     this.g = new Array(this.n);
     this.p = new Array(this.n);
     for (i = 0; i < this.n; i++) {
@@ -77,7 +77,7 @@ export class DynamicProgrammingService {
       return this.g[start][set];
     } else {
       for (let x = 0; x < this.N; x++) {
-        mask = this.npow - 1 - this.helpersService.power(2, x);
+        mask = this.npow - 1 - Math.pow(2, x);
         masked = set & mask;
         if (masked != set) {
           temp = this.d[start][x] + this.tsp(x, masked);
@@ -97,7 +97,7 @@ export class DynamicProgrammingService {
       return;
     }
     let x = this.p[start][set];
-    let mask = this.npow - 1 - this.helpersService.power(2, x);
+    let mask = this.npow - 1 - Math.pow(2, x);
     let masked = set & mask;
     this.outputArray.push(x);
     this.getPath(x, masked);
