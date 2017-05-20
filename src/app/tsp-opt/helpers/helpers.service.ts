@@ -69,4 +69,17 @@ export class HelpersService {
     }
     return arr;
   }
+
+  // TODO: Fix bug with 2^6 !!!
+  /**
+   * Calculate math power
+   * @param x - value
+   * @param n - power
+   */
+  power(x, n) {
+    if (n === 0) return 1;
+    if (n === -1) return 1 / x;
+    if (n === 1) return x;
+    return Math.exp(n * Math.log(x))
+  }
 }

@@ -4,6 +4,7 @@ import { BruteForceService } from './../algorithms/brute-force.service';
 import { NearestNeighbourService } from './../algorithms/nearest-neighbour.service';
 import { BranchAndBoundService } from './../algorithms/branch-and-bound.service';
 import { HeldKarpService } from './../algorithms/held-karp.service';
+import { DynamicProgrammingService } from './../algorithms/dynamic-programming.service';
 
 @Injectable()
 export class TspOptService {
@@ -13,20 +14,24 @@ export class TspOptService {
     private nearestNeighbourService: NearestNeighbourService,
     private branchAndBoundService: BranchAndBoundService,
     private heldKarpService: HeldKarpService,
+    private dynamicProgrammingService: DynamicProgrammingService,
   ) { }
 
   public oprimizeRoute(matrix: number[][]) {
     return new Promise((resolve, reject) => {
-      this.bruteForceService.optimize(matrix).then(order => {
-        // resolve(order);
-      });
-      this.nearestNeighbourService.optimize(matrix).then(order => {
-        // resolve(order);
-      });
-      this.branchAndBoundService.optimize(matrix).then(order => {
-        // resolve(order);
-      });
-      this.heldKarpService.optimize(matrix).then(order => {
+      // this.bruteForceService.optimize(matrix).then(order => {
+      //   resolve(order);
+      // });
+      // this.nearestNeighbourService.optimize(matrix).then(order => {
+      //   resolve(order);
+      // });
+      // this.branchAndBoundService.optimize(matrix).then(order => {
+      //   resolve(order);
+      // });
+      // this.heldKarpService.optimize(matrix).then(order => {
+      //   resolve(order);
+      // });
+      this.dynamicProgrammingService.optimize(matrix).then(order => {
         resolve(order);
       });
     });
