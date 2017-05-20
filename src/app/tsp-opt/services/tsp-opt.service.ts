@@ -20,25 +20,33 @@ export class TspOptService {
   ) { }
 
   public oprimizeRoute(matrix: number[][]) {
+    console.table(matrix);
+    
     return new Promise((resolve, reject) => {
-      // this.bruteForceService.optimize(matrix).then(order => {
-      //   resolve(order);
-      // });
-      // this.nearestNeighbourService.optimize(matrix).then(order => {
-      //   resolve(order);
-      // });
-      // this.branchAndBoundService.optimize(matrix).then(order => {
-      //   resolve(order);
-      // });
-      // this.heldKarpService.optimize(matrix).then(order => {
-      //   resolve(order);
-      // });
-      this.dynamicProgrammingService.optimize(matrix).then(order => {
-        resolve(order);
+      this.bruteForceService.optimize(matrix).then(order => {
+        console.log('bruteForceService', order);
+        // resolve(order);
       });
-      // this.geneticService.optimize(matrix).then(order => {
-      //   resolve(order);
-      // });
+      this.nearestNeighbourService.optimize(matrix).then(order => {
+        console.log('nearestNeighbourService', order);
+        // resolve(order);
+      });
+      this.branchAndBoundService.optimize(matrix).then(order => {
+        console.log('branchAndBoundService', order);
+        // resolve(order);
+      });
+      this.heldKarpService.optimize(matrix).then(order => {
+        console.log('heldKarpService', order);
+        // resolve(order);
+      });
+      this.dynamicProgrammingService.optimize(matrix).then(order => {
+        console.log('dynamicProgrammingService', order);
+        // resolve(order);
+      });
+      this.geneticService.optimize(matrix).then(order => {
+        console.log('geneticService', order);
+        // resolve(order);
+      });
     });
   }
 }

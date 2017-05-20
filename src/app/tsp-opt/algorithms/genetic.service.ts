@@ -53,9 +53,9 @@ export class GeneticService {
 
       do {
         this.GANextGeneration();
-        console.log(this.currentGeneration);
       }
       while (this.currentGeneration < 1500);
+      
       resolve(this.helpersService.reformatArray(this.best));
     });
   }

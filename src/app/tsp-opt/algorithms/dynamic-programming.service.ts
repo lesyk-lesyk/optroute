@@ -4,25 +4,28 @@ import { HelpersService } from './../helpers/helpers.service';
 @Injectable()
 export class DynamicProgrammingService {
 
-  private g;
-  private p;
-  private npow;
-  private N;
-  private n;
-  private d;
-  private outputArray = [];
-  private dpFinish = false;
-  private dpRunning = false;
-  private best: number[] = [];
-  private matrix: number[][] = [];
+  private g: number[][];
+  private p: number[][];
+  private npow: number;
+  private N: number;
+  private n : number;
+  private d: number[][];
+  private outputArray: number[];
+  private best: number[];
+  private matrix: number[][];
   
   constructor(private helpersService: HelpersService) { }
 
   private DPInitialize(matrix: number[][]) {
+    this.g = [];
+    this.p = [];
+    this.npow = null;
+    this.N = null;
     this.n = matrix[0].length;
-    this.matrix = this.helpersService.replaceInfToZero(matrix.clone());
-    this.best = [];
+    this.d= [];
     this.outputArray = [];
+    this.best = [];
+    this.matrix = this.helpersService.replaceInfToZero(matrix.clone());
   }
 
   public optimize(matrix: number[][]) {
@@ -46,9 +49,9 @@ export class DynamicProgrammingService {
     this.g = new Array(this.n);
     this.p = new Array(this.n);
     for (i = 0; i < this.n; i++) {
-      console.log('this.N', this.N);
-      console.log('this.n', this.n);
-      console.log('npow', this.npow);
+      // console.log('this.N', this.N);
+      // console.log('this.n', this.n);
+      // console.log('npow', this.npow);
       this.g[i] = new Array(this.npow);
       this.p[i] = new Array(this.npow);
       for (j = 0; j < this.npow; j++) {

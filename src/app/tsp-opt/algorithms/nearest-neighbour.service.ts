@@ -20,7 +20,7 @@ export class NearestNeighbourService {
         row = minIndex;
       }
 
-      resolve(order);
+      resolve(order.clone());
     });
   }
 }

@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-
 import { HelpersService } from './../helpers/helpers.service';
-
 
 @Injectable()
 export class BranchAndBoundService {
@@ -17,28 +15,27 @@ export class BranchAndBoundService {
 
   constructor(private helpersService: HelpersService) { }
 
-  private BNBInitialize() {
+  private BNBInitialize(matrix) {
     this.sourceCity = 0
     this.initialRoute = [];
     this.optimumRoute = [];
     this.nodes = 1;
     this.routeCost = 0;
     this.optimumCost = Number.MAX_VALUE;
-    this.matrix = [];
-    this.cityCount = 0;
+    this.matrix = this.helpersService.replaceInfToZero(matrix);
+    this.cityCount = this.matrix[0].length;
   }
 
   public optimize(matrix: number[][]) {
     return new Promise((resolve, reject) => {
       if (matrix.length > 15) {
         reject('Too many point to calculate for Branch and Bound algorithm');
+      } else {
+        this.BNBInitialize(matrix);
+        this.BNBSearch(this.sourceCity, this.initialRoute);
+        this.optimumRoute.pop();
+        resolve(this.optimumRoute.clone());
       }
-      this.BNBInitialize();
-      this.matrix = this.helpersService.replaceInfToZero(matrix);
-      this.cityCount = this.matrix[0].length;
-      this.BNBSearch(this.sourceCity, this.initialRoute);
-
-      resolve(this.optimumRoute.clone());
     });
   }
 

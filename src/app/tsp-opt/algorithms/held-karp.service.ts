@@ -4,24 +4,20 @@ import { HelpersService } from './../helpers/helpers.service';
 @Injectable()
 export class HeldKarpService {
 
-  private n;
-  // cost matrix
-  private cost;
-  // matrix of adjusted costs
-  private costWithPi;
-  private bestNode = new QNode();
-  private bnbhkFinish = false;
-  private bnbhkRunning = false;
-  private best = [];
+  private n: number;
+  private cost: number[][];         // cost matrix
+  private costWithPi: number[][];   // matrix of adjusted costs
+  private bestNode: QNode;
+  private best: number[];
 
   constructor(private helpersService: HelpersService) { }
 
   BNBHKInitialize(matrix) {
     this.n = matrix[0].length;
     this.cost = this.helpersService.replaceInfToZero(matrix.clone());
+    this.costWithPi = this.helpersService.createNumber2DArr(this.n);
     this.bestNode = new QNode();
     this.bestNode.lowerBound = Number.MAX_VALUE;
-    this.costWithPi = this.helpersService.createNumber2DArr(this.n);
     this.best = [];
   }
 
@@ -32,7 +28,6 @@ export class HeldKarpService {
         reject("Too many point to calculate for Branch and Bound algorithm");
       } else {
         this.BNBHKSolve();
-        // TODO: refactor!
         this.best.unshift(0);
         this.best.pop();
         resolve(this.best.clone());
@@ -54,11 +49,11 @@ export class HeldKarpService {
         if (i < 0) {
           if (currentNode.lowerBound < this.bestNode.lowerBound) {
             this.bestNode = currentNode;
-            console.log("%.0f", this.bestNode.lowerBound);
+            // console.log("%.0f", this.bestNode.lowerBound);
           }
           break;
         }
-        console.log(".");
+        // console.log(".");
         var children = new PriorityQueue();
         children.push(this.exclude(currentNode, i, currentNode.parent[i]));
         for (var j = 0; j < this.n; j++) {
@@ -67,16 +62,16 @@ export class HeldKarpService {
         currentNode = children.poll();
         pq.pushAll(children);
       } while (currentNode.lowerBound < this.bestNode.lowerBound);
-      console.log("%n");
+      // console.log("%n");
       currentNode = pq.poll();
     } while (currentNode != null && currentNode.lowerBound < this.bestNode.lowerBound);
     // output suitable for gnuplot
     // set style data vector
-    console.log("# %.0f%n", this.bestNode.lowerBound);
+    // console.log("# %.0f%n", this.bestNode.lowerBound);
     var jj = 0;
     do {
       var ii = this.bestNode.parent[jj];
-      //Console.log("%f\t%f\t%f\t%f%n", x[j], y[j], x[i] - x[j], y[i] - y[j]);
+      // Console.log("%f\t%f\t%f\t%f%n", x[j], y[j], x[i] - x[j], y[i] - y[j]);
       this.best.push(ii);
       jj = ii;
     } while (jj != 0);

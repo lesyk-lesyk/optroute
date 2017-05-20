@@ -43,7 +43,7 @@ export class BruteForceService {
       }
       order.pop();
 
-      resolve(order);
+      resolve(order.clone());
     });
   }
 }
