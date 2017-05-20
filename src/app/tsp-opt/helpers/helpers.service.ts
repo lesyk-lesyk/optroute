@@ -27,4 +27,46 @@ export class HelpersService {
     }
     return false;
   }
+
+  /**
+   * Create boolean matrix with 'false' values
+   * @param n - size of matrix
+   */
+  public createBooleanArr(n): boolean[][] {
+    var arr = new Array(n);
+    for (var i = 0; i < n; i++) {
+      arr[i] = new Array(n);
+      for (var j = 0; j < n; j++) {
+        arr[i][j] = false;
+      }
+    }
+    return arr;
+  }
+
+  /**
+   * Create matrix with zero values
+   * @param n - size of matrix
+   */
+  public createNumber2DArr(n): number[][] {
+    var arr = new Array(n);
+    for (var i = 0; i < n; i++) {
+      arr[i] = new Array(n);
+      for (var j = 0; j < n; j++) {
+        arr[i][j] = 0;
+      }
+    }
+    return arr;
+  }
+
+  /**
+   * Create array with zero values
+   * @param n - size of array
+   */
+  public createNumber1DArr(n): number[] {
+    var arr = new Array(n);
+    for (var i = 0; i < n; i++) {
+      arr[i] = 0;
+    }
+    return arr;
+  }
 }

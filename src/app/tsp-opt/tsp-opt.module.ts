@@ -6,6 +6,7 @@ import { TspOptService } from './services/tsp-opt.service';
 import { BruteForceService } from './algorithms/brute-force.service';
 import { NearestNeighbourService } from './algorithms/nearest-neighbour.service';
 import { BranchAndBoundService } from './algorithms/branch-and-bound.service';
+import { HeldKarpService } from './algorithms/held-karp.service';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { BranchAndBoundService } from './algorithms/branch-and-bound.service';
     TspOptService,
     BruteForceService,
     NearestNeighbourService,
-    BranchAndBoundService
+    BranchAndBoundService,
+    HeldKarpService,
   ]
 })
 export class TspOptModule { }

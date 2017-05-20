@@ -15,9 +15,7 @@ export class BranchAndBoundService {
   private matrix;
   private cityCount;
 
-  constructor(private helpersService: HelpersService) {
-    this.BNBInitialize();
-  }
+  constructor(private helpersService: HelpersService) { }
 
   private BNBInitialize() {
     this.sourceCity = 0
