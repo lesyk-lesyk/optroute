@@ -8,6 +8,7 @@ import { NearestNeighbourService } from './algorithms/nearest-neighbour.service'
 import { BranchAndBoundService } from './algorithms/branch-and-bound.service';
 import { HeldKarpService } from './algorithms/held-karp.service';
 import { DynamicProgrammingService } from './algorithms/dynamic-programming.service';
+import { GeneticService } from './algorithms/genetic.service';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { DynamicProgrammingService } from './algorithms/dynamic-programming.serv
     BranchAndBoundService,
     HeldKarpService,
     DynamicProgrammingService,
+    GeneticService,
   ]
 })
 export class TspOptModule { }

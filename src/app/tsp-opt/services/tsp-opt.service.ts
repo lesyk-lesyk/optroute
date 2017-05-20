@@ -5,6 +5,7 @@ import { NearestNeighbourService } from './../algorithms/nearest-neighbour.servi
 import { BranchAndBoundService } from './../algorithms/branch-and-bound.service';
 import { HeldKarpService } from './../algorithms/held-karp.service';
 import { DynamicProgrammingService } from './../algorithms/dynamic-programming.service';
+import { GeneticService } from './../algorithms/genetic.service';
 
 @Injectable()
 export class TspOptService {
@@ -15,6 +16,7 @@ export class TspOptService {
     private branchAndBoundService: BranchAndBoundService,
     private heldKarpService: HeldKarpService,
     private dynamicProgrammingService: DynamicProgrammingService,
+    private geneticService: GeneticService
   ) { }
 
   public oprimizeRoute(matrix: number[][]) {
@@ -31,7 +33,10 @@ export class TspOptService {
       // this.heldKarpService.optimize(matrix).then(order => {
       //   resolve(order);
       // });
-      this.dynamicProgrammingService.optimize(matrix).then(order => {
+      // this.dynamicProgrammingService.optimize(matrix).then(order => {
+      //   resolve(order);
+      // });
+      this.geneticService.optimize(matrix).then(order => {
         resolve(order);
       });
     });
