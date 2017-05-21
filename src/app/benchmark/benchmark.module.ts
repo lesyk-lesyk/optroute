@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { WebWorkerService } from 'angular2-web-worker';
 
 import { BenchmarkService } from './benchmark.service';
 
@@ -7,7 +8,8 @@ import { BenchmarkService } from './benchmark.service';
   imports: [],
   declarations: [],
   providers: [
-    BenchmarkService
+    BenchmarkService,
+    WebWorkerService,
   ]
 })
 export class BenchmarkModule { }

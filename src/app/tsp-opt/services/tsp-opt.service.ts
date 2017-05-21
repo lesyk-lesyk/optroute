@@ -24,43 +24,65 @@ export class TspOptService {
 
   public oprimizeRoute(matrix: number[][]) {
 
+    this.benchmarkService.measure(this.bruteForceService.optimize, matrix)
+      .then((data) => {
+        console.log('bruteForceService', data);
+        this.benchmarkService.measure(this.bruteForceService.optimize, matrix)
+          .then((data) => {
+            console.log('bruteForceService', data);
+            this.benchmarkService.measure(this.bruteForceService.optimize, matrix)
+              .then((data) => {
+                console.log('bruteForceService', data);
+                this.benchmarkService.measure(this.bruteForceService.optimize, matrix)
+                  .then((data) => {
+                    console.log('bruteForceService', data);
+                    this.benchmarkService.measure(this.bruteForceService.optimize, matrix)
+                      .then((data) => {
+                        console.log('bruteForceService', data);
+                        this.benchmarkService.measure(this.bruteForceService.optimize, matrix)
+                      })
+                  })
+              })
+          })
+      });
+
     return new Promise((resolve, reject) => {
 
-      this.benchmarkService.measure(this.bruteForceService.optimize(matrix))
-        .then((results: { data: OptimisationResult, time: number }) => {
-          console.log('bruteForceService', results.data, results.time);
-          resolve(results.data.order);
-        });
+      // this.benchmarkService.measure(this.bruteForceService.optimize, matrix)
+      //   .then((results: { data: OptimisationResult, time: number }) => {
+      //     console.log('bruteForceService', results.data, results.time);
+      //     resolve(results.data.order);
+      //   });
 
-      this.benchmarkService.measure(this.nearestNeighbourService.optimize(matrix))
-        .then((results: { data: OptimisationResult, time: number }) => {
-          console.log('nearestNeighbourService', results.data, results.time);
-          // resolve(results.order);
-        });
+      // this.benchmarkService.measure(this.nearestNeighbourService.optimize(matrix))
+      //   .then((results: { data: OptimisationResult, time: number }) => {
+      //     console.log('nearestNeighbourService', results.data, results.time);
+      //     // resolve(results.order);
+      //   });
 
-      this.benchmarkService.measure(this.branchAndBoundService.optimize(matrix))
-        .then((results: { data: OptimisationResult, time: number }) => {
-          console.log('branchAndBoundService', results.data, results.time);
-          // resolve(results.order);
-        });
+      // this.benchmarkService.measure(this.branchAndBoundService.optimize(matrix))
+      //   .then((results: { data: OptimisationResult, time: number }) => {
+      //     console.log('branchAndBoundService', results.data, results.time);
+      //     // resolve(results.order);
+      //   });
 
-      this.benchmarkService.measure(this.heldKarpService.optimize(matrix))
-        .then((results: { data: OptimisationResult, time: number }) => {
-          console.log('heldKarpService', results.data, results.time);
-          // resolve(results.order);
-        });
+      // this.benchmarkService.measure(this.heldKarpService.optimize(matrix))
+      //   .then((results: { data: OptimisationResult, time: number }) => {
+      //     console.log('heldKarpService', results.data, results.time);
+      //     // resolve(results.order);
+      //   });
 
-      this.benchmarkService.measure(this.dynamicProgrammingService.optimize(matrix))
-        .then((results: { data: OptimisationResult, time: number }) => {
-          console.log('dynamicProgrammingService', results.data, results.time);
-          // resolve(results.order);
-        });
+      // this.benchmarkService.measure(this.dynamicProgrammingService.optimize(matrix))
+      //   .then((results: { data: OptimisationResult, time: number }) => {
+      //     console.log('dynamicProgrammingService', results.data, results.time);
+      //     // resolve(results.order);
+      //   });
 
-      this.benchmarkService.measure(this.geneticService.optimize(matrix))
-        .then((results: { data: OptimisationResult, time: number }) => {
-          console.log('geneticService', results.data, results.time);
-          // resolve(results.order);
-        });
+      // this.benchmarkService.measure(this.geneticService.optimize(matrix))
+      //   .then((results: { data: OptimisationResult, time: number }) => {
+      //     console.log('geneticService', results.data, results.time);
+      //     // resolve(results.order);
+      //   });
     });
   }
 }
