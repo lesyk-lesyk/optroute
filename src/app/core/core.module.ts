@@ -2,6 +2,8 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
+import { ChartModule } from 'primeng/components/chart/chart';
+import { DataTableModule } from 'primeng/components/datatable/datatable';
 // Components
 import { NavbarComponent } from './components/navbar/navbar.component';
 
@@ -11,16 +13,20 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 
 // Services
 import { FormatterService } from './services/formatter.service';
+import { CompareResultsPageComponent } from './pages/compare-results-page/compare-results-page.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    ChartModule,
+    DataTableModule
   ],
   declarations: [
     NavbarComponent,
     PageNotFoundComponent,
-    HomePageComponent
+    HomePageComponent,
+    CompareResultsPageComponent
   ],
   exports: [
     NavbarComponent,

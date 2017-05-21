@@ -13,4 +13,6 @@ export interface OptimisationResult {
    * Algorithm name
    */
   name: string;
+
+  searchTime: number;
 }

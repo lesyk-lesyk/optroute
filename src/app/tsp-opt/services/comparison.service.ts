@@ -12,10 +12,9 @@ export class ComparisonService {
 
   public add(result: OptimisationResult): void {
     this.results.set(result.name, result);
-    console.log(this.results);    
   }
 
-  get allResults(): Map<string, OptimisationResult> {
+  getAllResults(){
     return this.results;
   }
 
@@ -26,7 +25,6 @@ export class ComparisonService {
   public getBestResult(): OptimisationResult {
     let bestCost = Infinity;
     let bestResult;
-    console.log(this.results);
     
     this.results.forEach(result => {
       if (result.cost < bestCost) {
@@ -35,7 +33,6 @@ export class ComparisonService {
         bestResult = result;
       }
     });
-    console.log('getBestResult', bestResult);
     
     return bestResult;
   }

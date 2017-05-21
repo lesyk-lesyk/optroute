@@ -1,0 +1,20 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 text-center search-time-chart">
+      <span>Search Time</span>
+      <p-chart #chartTime type="bar" [data]="searchTime" [options]="options"></p-chart>
+    </div>
+    <div class="col-xs-12 col-sm-6 text-center route-cost-chart">
+      <span>Route cost</span>
+      <p-chart #costChart type="bar" [data]="routeCostdata" [options]="options"></p-chart>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <p-dataTable [value]="resultsArray">
+        <p-column *ngFor="let col of cols" [field]="col.field" [header]="col.header"></p-column>
+      </p-dataTable>
+    </div>
+  </div>
+</div>

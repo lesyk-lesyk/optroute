@@ -55,7 +55,7 @@ export class GeneticService {
       do {
         this.GANextGeneration();
       }
-      while (this.currentGeneration < 10000);
+      while (this.currentGeneration < 100);
 
       const reformattedOrder = this.helpersService.reformatArray(this.best);
       resolve({

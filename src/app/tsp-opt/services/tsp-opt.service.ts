@@ -31,49 +31,55 @@ export class TspOptService {
       let bruteForceServiceTimer = this.benchmarkService.createTimer('bruteForceService');
       this.bruteForceService.optimize(matrix)
         .then((result) => {
-          bruteForceServiceTimer.stop();
+          const time = bruteForceServiceTimer.stop();
+          result.searchTime = time;
           this.comparisonService.add(result);
-          console.log(result.order, result.cost);
+          console.log(result.order, result.cost, result.searchTime);
         })
         .then(() => {
           let nearestNeighbourTimer = this.benchmarkService.createTimer('nearestNeighbourService');
           return this.nearestNeighbourService.optimize(matrix)
             .then((result) => {
-              nearestNeighbourTimer.stop();
+              const time = nearestNeighbourTimer.stop();
+              result.searchTime = time;
               this.comparisonService.add(result);
-              console.log(result.order, result.cost);
+              console.log(result.order, result.cost, result.searchTime);
             });
         })
         .then(() => {
           let branchAndBoundServiceTimer = this.benchmarkService.createTimer('branchAndBoundService');
           return this.branchAndBoundService.optimize(matrix).then((result) => {
-            branchAndBoundServiceTimer.stop();
+            const time = branchAndBoundServiceTimer.stop();
+            result.searchTime = time;
             this.comparisonService.add(result);
-            console.log(result.order, result.cost);
+            console.log(result.order, result.cost, result.searchTime);
           });
         })
         .then(() => {
           let heldKarpServiceTimer = this.benchmarkService.createTimer('heldKarpService');
           return this.heldKarpService.optimize(matrix).then((result) => {
-            heldKarpServiceTimer.stop();
+            const time = heldKarpServiceTimer.stop();
+            result.searchTime = time;
             this.comparisonService.add(result);
-            console.log(result.order, result.cost);
+            console.log(result.order, result.cost, result.searchTime);
           });
         })
         .then(() => {
           let dynamicProgrammingServiceTimer = this.benchmarkService.createTimer('dynamicProgrammingService');
           return this.dynamicProgrammingService.optimize(matrix).then((result) => {
-            dynamicProgrammingServiceTimer.stop();
+            const time = dynamicProgrammingServiceTimer.stop();
+            result.searchTime = time;
             this.comparisonService.add(result);
-            console.log(result.order, result.cost);
+            console.log(result.order, result.cost, result.searchTime);
           });
         })
         .then(() => {
           let geneticServiceTimer = this.benchmarkService.createTimer('geneticService');
           return this.geneticService.optimize(matrix).then((result) => {
-            geneticServiceTimer.stop();
+            const time = geneticServiceTimer.stop();
+            result.searchTime = time;
             this.comparisonService.add(result);
-            console.log(result.order, result.cost);
+            console.log(result.order, result.cost, result.searchTime);
           });
         })
         .then(() => {
