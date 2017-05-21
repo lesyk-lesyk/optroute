@@ -6,6 +6,7 @@ import { GMapModule as PrimeGMapModule } from 'primeng/components/gmap/gmap';
 import { ButtonModule } from 'primeng/components/button/button';
 import { DataTableModule } from 'primeng/components/datatable/datatable';
 import { SharedModule } from 'primeng/components/common/shared';
+import { AutoCompleteModule } from 'primeng/components/autocomplete/autocomplete';
 
 import { SearchRouteRoutingModule } from './search-route-routing.module';
 import { SearchRouteComponent } from './search-route-page/search-route.component';
@@ -17,7 +18,8 @@ import { SearchRouteComponent } from './search-route-page/search-route.component
     PrimeGMapModule,
     GMapModule,
     ButtonModule,
-    DataTableModule
+    DataTableModule,
+    AutoCompleteModule
   ],
   declarations: [
     SearchRouteComponent

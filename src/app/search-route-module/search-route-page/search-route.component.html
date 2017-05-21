@@ -1,32 +1,55 @@
-<div class="container-fluid">
-  <div class="row">
+<div class="container-fluid main-container">
+  <div class="row main-row">
     <div class="col-sm-7 gmap-container">
-      <p-gmap 
-          [options]="options" 
-          [overlays]="overlays" 
-          [style]="{'width':'100%','height':'100%'}" 
-          (onMapClick)="handleMapClick($event)"
-          (onMapReady)="setMap($event)">
+      <p-gmap [options]="options" [overlays]="overlays" [style]="{'width':'100%','height':'100%'}" (onMapClick)="handleMapClick($event)"
+        (onMapReady)="setMap($event)">
       </p-gmap>
     </div>
-    <div class="col-sm-5">
-      <p-dataTable 
-            class="map-points-table"
-            [value]="mapPoints" 
-            [emptyMessage]="emptyMapPointsMessage"
-            scrollable="true" 
-            scrollHeight="350px">
+    <div class="col-sm-5 map-controls-container">
+      <div class="text-center point-controls-container">
+        <div class="autocomplete-block">
+          <p-autoComplete styleClass="address-autocomplete"></p-autoComplete>
+          <button type="button" pButton label="Add" icon="fa-map-marker"></button>
+        </div>
+        <div class="buttons-block">
+          <button type="button" class="ui-button-warning" pButton label="Clear" icon="fa-close" (click)="clear()"></button>
+          <button type="button" class="ui-button-warning" pButton label="Reset" icon="fa-map-marker" (click)="reset()"></button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <p-dataTable styleClass="map-points-table" [value]="mapPoints" [emptyMessage]="emptyMapPointsMessage">
           <p-column field="address" header="Addresses"></p-column>
-      </p-dataTable>
+        </p-dataTable>
+      </div>
+
+      <div class="route-controls-container">
+        <div class="col-xs-12 text-center">
+          <button type="button" pButton label="1 Build" icon="fa-map-signs" (click)="buildRoute()"></button>
+          <button type="button" pButton label="2 Optimise" icon="fa-play" (click)="optimiseRoute()"></button>
+          <button type="button" pButton label="3 Details " icon="fa-bar-chart" [routerLink]="['/compare-results']"></button>
+        </div>
+
+        <div class="col-xs-12 routes-info">
+          <dl class="dl-horizontal">
+            <dt>
+              <p class="text-info">Original route: </p>
+            </dt>
+            <dd>...</dd>
+            <dt>
+              <p class="text-success">Optimised route: </p>
+            </dt>
+            <dd>...</dd>
+          </dl>
+        </div>
+      </div>
+
     </div>
   </div>
-  <div class="col-sm-7 text-center">
-    <button type="button" pButton label="Clear" icon="fa-close" (click)="clear()"></button>
-    <button type="button" pButton label="Reset" icon="fa-map-marker" (click)="reset()"></button>
-    <button type="button" pButton label="Zoom In" icon="fa-search-plus" (click)="zoomIn()"></button>
-    <button type="button" pButton label="Zoom Out" icon="fa-search-minus" (click)="zoomOut()"></button>
-    <button type="button" pButton label="Build Route" icon="fa-map-signs" (click)="buildRoute()"></button>
-    <button type="button" pButton label="Optimise Route" icon="fa-map-signs" (click)="optimiseRoute()"></button>
-    <a routerLink="/compare-results" class="btn btn-primary">Compare</a>
-  </div>
 </div>
+
+
+
+
+<!--<button type="button" pButton label="Zoom In" icon="fa-search-plus" (click)="zoomIn()"></button>
+    <button type="button" pButton label="Zoom Out" icon="fa-search-minus" (click)="zoomOut()"></button>-->

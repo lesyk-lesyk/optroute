@@ -1,5 +1,16 @@
+html,
+body {
+  height: 100%;
+}
+
+.main-row,
+.main-container,
+.map-controls-container {
+  height: 100%;
+}
+
 .gmap-container {
-  height: 400px;
+  height: 100%;
 }
 
 [class^="col-"],
@@ -12,5 +23,109 @@
     text-align: center;
     font-style: italic;
     color: gray;
+  }
+}
+
+.map-points-table {
+  table thead {
+    display: none;
+  }
+}
+
+.point-controls-container {
+  .autocomplete-block {
+    float: left;
+  }
+  .buttons-block {
+    float: right;
+  }
+}
+
+$pointControlsContainerHeight: 55px;
+$routeControlsContainerHeight: 180px;
+.point-controls-container {
+  padding: 8px;
+  height: $pointControlsContainerHeight;
+}
+
+.table-container {
+  height: calc(100% - #{$pointControlsContainerHeight} - #{$routeControlsContainerHeight});
+  overflow-y: auto;
+}
+
+.route-controls-container {
+  padding-top: 25px;
+  background-color: #dff0d8;
+  height: $routeControlsContainerHeight;
+  button {
+    // width: 130px;
+    margin: 10px 5px;
+  }
+  .routes-info {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bolder;
+    dl {
+      margin: 0;
+    }
+  }
+}
+
+.dl-horizontal dt {
+  float: left;
+  width: 160px;
+  overflow: hidden;
+  clear: left;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dl-horizontal dd {
+  margin-left: 180px;
+}
+
+@media screen and (min-width: 1150px) {
+  .route-controls-container {
+    button {
+      width: 130px;
+    }
+  }
+}
+
+@media screen and (max-width: 1150px) {
+  .main-row,
+  .main-container {
+    height: auto;
+  }
+  .gmap-container {
+    height: 300px;
+  }
+  .map-controls-container {
+    height: auto;
+  }
+  $pointControlsContainerHeightSmall: 100px;
+  $routeControlsContainerHeightSmall: 180px;
+  .point-controls-container {
+    text-align: center;
+    .autocomplete-block {
+      float: none;
+    }
+    .buttons-block {
+      margin-top: 10px;
+      float: none;
+    }
+  }
+  .point-controls-container {
+    height: $pointControlsContainerHeightSmall;
+  }
+  .table-container {
+    height: 200px;
+  }
+  .route-controls-container {
+    height: $routeControlsContainerHeightSmall;
+    width: initial;
+    margin: 10px 0px;
+    font-size: 12px;
   }
 }
