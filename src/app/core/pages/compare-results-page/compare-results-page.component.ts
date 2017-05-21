@@ -1,14 +1,16 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ComparisonService } from "app/tsp-opt/services/comparison.service";
 
 @Component({
   selector: 'app-compare-results-page',
   templateUrl: './compare-results-page.component.html',
-  styleUrls: ['./compare-results-page.component.scss']
+  styleUrls: ['./compare-results-page.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CompareResultsPageComponent implements OnInit {
 
-  @ViewChild('chart') private chart;
+  @ViewChild('chartTime') private chartTime;
+  @ViewChild('costChart') private costChart;
 
   // Charts
   routeCostdata: any;
@@ -66,12 +68,16 @@ export class CompareResultsPageComponent implements OnInit {
 
     results.forEach((value, key) => {
       this.routeCostdata.labels.push(key);
-      this.routeCostdata.datasets[0].data.push(value.cost);
-
       this.searchTime.labels.push(key);
-      this.searchTime.datasets[0].data.push(value.searchTime);
-
-      this.resultsArray.push(value);
     });
+
+    results.forEach((value, key) => {
+      this.resultsArray.push(value);
+      this.routeCostdata.datasets[0].data.push(value.cost);
+      this.searchTime.datasets[0].data.push(value.searchTime);
+    });
+
+    // this.chartTime.refresh();
+    // this.costChart.refresh();
   }
 }

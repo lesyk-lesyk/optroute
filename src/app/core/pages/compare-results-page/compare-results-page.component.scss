@@ -1,4 +1,18 @@
-.search-time-chart,
-.route-cost-chart {
-  padding: 0px 40px;
+.search-time-wrapper,
+.route-cost-wrapper {
+  padding: 20px 40px !important;
+  span {
+    font-weight: bold;
+    font-size: 16px;
+  }
+}
+
+.results-table-wrapper {
+  padding: 0px 10px !important;
+
+  .ui-datatable .ui-datatable-thead > tr > th {
+    font-weight: bold;
+    color: #337ab7;
+    background-color: #dff0d8;;
+  }
 }
