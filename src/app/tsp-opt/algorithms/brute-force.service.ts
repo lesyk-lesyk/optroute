@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+
 import { HelpersService } from './../helpers/helpers.service';
+import { OptimisationResult } from './../interfaces/optimisation-result';
 
 @Injectable()
 export class BruteForceService {
@@ -7,7 +9,8 @@ export class BruteForceService {
   private matrix: number[][];
 
   constructor(private helpersService: HelpersService) { }
-  public optimize(matrix) {
+  
+  public optimize(matrix): Promise<OptimisationResult> {
     return new Promise((resolve, reject) => {
 
       const permArr = [];

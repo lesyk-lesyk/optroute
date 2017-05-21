@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+
 import { HelpersService } from './../helpers/helpers.service';
+import { OptimisationResult } from './../interfaces/optimisation-result';
 
 @Injectable()
 export class NearestNeighbourService {
@@ -7,7 +9,7 @@ export class NearestNeighbourService {
 
   constructor(private helpersService: HelpersService) { }
 
-  public optimize(matrix) {
+  public optimize(matrix): Promise<OptimisationResult> {
     this.matrix = matrix.clone();
 
     return new Promise((resolve, reject) => {

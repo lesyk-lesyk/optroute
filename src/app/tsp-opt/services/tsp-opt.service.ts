@@ -1,3 +1,4 @@
+import { OptimisationResult } from './../interfaces/optimisation-result';
 import { Injectable } from '@angular/core';
 
 import { BruteForceService } from './../algorithms/brute-force.service';
@@ -6,6 +7,7 @@ import { BranchAndBoundService } from './../algorithms/branch-and-bound.service'
 import { HeldKarpService } from './../algorithms/held-karp.service';
 import { DynamicProgrammingService } from './../algorithms/dynamic-programming.service';
 import { GeneticService } from './../algorithms/genetic.service';
+import { BenchmarkService } from "app/benchmark/benchmark.service";
 
 @Injectable()
 export class TspOptService {
@@ -16,37 +18,49 @@ export class TspOptService {
     private branchAndBoundService: BranchAndBoundService,
     private heldKarpService: HeldKarpService,
     private dynamicProgrammingService: DynamicProgrammingService,
-    private geneticService: GeneticService
+    private geneticService: GeneticService,
+    private benchmarkService: BenchmarkService,
   ) { }
 
   public oprimizeRoute(matrix: number[][]) {
-    console.table(matrix);
-    
+
     return new Promise((resolve, reject) => {
-      this.bruteForceService.optimize(matrix).then((results: {order, cost}) => {
-        console.log('bruteForceService', results.order, results.cost);
-        resolve(results.order);
-      });
-      this.nearestNeighbourService.optimize(matrix).then((results: {order, cost}) => {
-        console.log('nearestNeighbourService', results.order, results.cost);
-        resolve(results.order);
-      });
-      this.branchAndBoundService.optimize(matrix).then((results: {order, cost}) => {
-        console.log('branchAndBoundService', results.order, results.cost);
-        resolve(results.order);
-      });
-      this.heldKarpService.optimize(matrix).then((results: {order, cost}) => {
-        console.log('heldKarpService', results.order, results.cost);
-        resolve(results.order);
-      });
-      this.dynamicProgrammingService.optimize(matrix).then((results: {order, cost}) => {
-        console.log('dynamicProgrammingService', results.order, results.cost);
-        resolve(results.order);
-      });
-      this.geneticService.optimize(matrix).then((results: {order, cost}) => {
-        console.log('geneticService', results.order, results.cost);
-        resolve(results.order);
-      });
+
+      this.benchmarkService.measure(this.bruteForceService.optimize(matrix))
+        .then((results: { data: OptimisationResult, time: number }) => {
+          console.log('bruteForceService', results.data, results.time);
+          resolve(results.data.order);
+        });
+
+      this.benchmarkService.measure(this.nearestNeighbourService.optimize(matrix))
+        .then((results: { data: OptimisationResult, time: number }) => {
+          console.log('nearestNeighbourService', results.data, results.time);
+          // resolve(results.order);
+        });
+
+      this.benchmarkService.measure(this.branchAndBoundService.optimize(matrix))
+        .then((results: { data: OptimisationResult, time: number }) => {
+          console.log('branchAndBoundService', results.data, results.time);
+          // resolve(results.order);
+        });
+
+      this.benchmarkService.measure(this.heldKarpService.optimize(matrix))
+        .then((results: { data: OptimisationResult, time: number }) => {
+          console.log('heldKarpService', results.data, results.time);
+          // resolve(results.order);
+        });
+
+      this.benchmarkService.measure(this.dynamicProgrammingService.optimize(matrix))
+        .then((results: { data: OptimisationResult, time: number }) => {
+          console.log('dynamicProgrammingService', results.data, results.time);
+          // resolve(results.order);
+        });
+
+      this.benchmarkService.measure(this.geneticService.optimize(matrix))
+        .then((results: { data: OptimisationResult, time: number }) => {
+          console.log('geneticService', results.data, results.time);
+          // resolve(results.order);
+        });
     });
   }
 }

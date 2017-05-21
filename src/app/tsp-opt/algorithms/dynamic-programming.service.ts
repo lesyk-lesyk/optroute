@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+
 import { HelpersService } from './../helpers/helpers.service';
+import { OptimisationResult } from './../interfaces/optimisation-result';
 
 @Injectable()
 export class DynamicProgrammingService {
@@ -28,7 +30,7 @@ export class DynamicProgrammingService {
     this.matrix = this.helpersService.replaceInfToZero(matrix.clone());
   }
 
-  public optimize(matrix: number[][]) {
+  public optimize(matrix: number[][]): Promise<OptimisationResult> {
     return new Promise((resolve, reject) => {
       this.DPInitialize(matrix);
       if (this.n > 20) {

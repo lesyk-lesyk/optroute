@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HelpersService } from './../helpers/helpers.service';
+import { OptimisationResult } from './../interfaces/optimisation-result';
 
 @Injectable()
 export class GeneticService {
@@ -47,7 +48,7 @@ export class GeneticService {
     this.setBestValue();
   }
 
-  public optimize(matrix: number[][]) {
+  public optimize(matrix: number[][]): Promise<OptimisationResult> {
     return new Promise((resolve, reject) => {
       this.GAInitialize(matrix);
 

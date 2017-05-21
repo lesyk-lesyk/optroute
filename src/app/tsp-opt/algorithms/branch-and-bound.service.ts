@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+
 import { HelpersService } from './../helpers/helpers.service';
+import { OptimisationResult } from './../interfaces/optimisation-result';
 
 @Injectable()
 export class BranchAndBoundService {
@@ -22,11 +24,11 @@ export class BranchAndBoundService {
     this.nodes = 1;
     this.routeCost = 0;
     this.optimumCost = Number.MAX_VALUE;
-    this.matrix = this.helpersService.replaceInfToZero(matrix);
+    this.matrix = this.helpersService.replaceInfToZero(matrix.clone());
     this.cityCount = this.matrix[0].length;
   }
 
-  public optimize(matrix: number[][]) {
+  public optimize(matrix: number[][]): Promise<OptimisationResult> {
     return new Promise((resolve, reject) => {
       if (matrix.length > 15) {
         reject('Too many point to calculate for Branch and Bound algorithm');

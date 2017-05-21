@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+
 import { HelpersService } from './../helpers/helpers.service';
+import { OptimisationResult } from './../interfaces/optimisation-result';
 
 @Injectable()
 export class HeldKarpService {
@@ -23,7 +25,7 @@ export class HeldKarpService {
     this.matrix = matrix.clone();
   }
 
-  public optimize(matrix: number[][]) {
+  public optimize(matrix: number[][]): Promise<OptimisationResult> {
     return new Promise((resolve, reject) => {
       this.BNBHKInitialize(matrix);
       if (this.n > 50) {
