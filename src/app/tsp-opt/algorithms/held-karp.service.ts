@@ -36,7 +36,8 @@ export class HeldKarpService {
         this.best.pop();
         resolve({
           order: this.best.clone(),
-          cost: this.helpersService.calculateRouteCost(this.matrix, this.best)
+          cost: this.helpersService.calculateRouteCost(this.matrix, this.best),
+          name: 'Held-Karp'
         });
       }
     });

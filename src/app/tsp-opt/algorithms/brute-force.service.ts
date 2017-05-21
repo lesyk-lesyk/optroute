@@ -53,7 +53,8 @@ export class BruteForceService {
 
       resolve({
         order: order.clone(),
-        cost: this.helpersService.calculateRouteCost(this.matrix, order)
+        cost: this.helpersService.calculateRouteCost(this.matrix, order),
+        name: 'Brute Force'
       });
     });
   }

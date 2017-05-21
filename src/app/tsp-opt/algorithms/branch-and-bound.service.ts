@@ -38,7 +38,8 @@ export class BranchAndBoundService {
         this.optimumRoute.pop();
         resolve({
           order: this.optimumRoute.clone(),
-          cost: this.helpersService.calculateRouteCost(this.matrix, this.optimumRoute)
+          cost: this.helpersService.calculateRouteCost(this.matrix, this.optimumRoute),
+          name: 'Branch and Bound'
         });
       }
     });

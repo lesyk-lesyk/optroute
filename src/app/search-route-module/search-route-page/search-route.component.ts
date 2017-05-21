@@ -1,3 +1,4 @@
+import { OptimisationResult } from './../../tsp-opt/interfaces/optimisation-result';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { MapPoint } from './../models/map-point';
@@ -141,9 +142,9 @@ export class SearchRouteComponent implements OnInit {
     const locations = this.mapPoints.map(point => point.marker.getPosition());
     this.gMapApiClientService.getDistanceMatrix(locations)
       .then(matrix => {
-        this.tspOptService.oprimizeRoute(matrix).then(result => {
+        this.tspOptService.oprimizeRoute(matrix).then((result: OptimisationResult) => {
           console.log('optimise result', result);
-          this.buildOptRoute(result);
+          this.buildOptRoute(result.order);
         });
       })
       .catch((error: Message) => {

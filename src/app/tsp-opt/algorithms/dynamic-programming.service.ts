@@ -39,7 +39,8 @@ export class DynamicProgrammingService {
         this.DPCompute();
         resolve({
           order: this.best.clone(),
-          cost: this.helpersService.calculateRouteCost(this.matrix, this.best)
+          cost: this.helpersService.calculateRouteCost(this.matrix, this.best),
+          name: 'Dynamic Programming'
         });
       }
     });

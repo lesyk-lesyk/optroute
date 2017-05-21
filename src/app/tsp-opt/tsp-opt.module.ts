@@ -5,6 +5,7 @@ import { HelpersModule } from './helpers/helpers.module';
 import { BenchmarkModule } from "app/benchmark/benchmark.module";
 
 import { TspOptService } from './services/tsp-opt.service';
+import { ComparisonService } from './services/comparison.service';
 import { BruteForceService } from './algorithms/brute-force.service';
 import { NearestNeighbourService } from './algorithms/nearest-neighbour.service';
 import { BranchAndBoundService } from './algorithms/branch-and-bound.service';
@@ -21,6 +22,7 @@ import { GeneticService } from './algorithms/genetic.service';
   declarations: [],
   providers: [
     TspOptService,
+    ComparisonService,
     BruteForceService,
     NearestNeighbourService,
     BranchAndBoundService,
