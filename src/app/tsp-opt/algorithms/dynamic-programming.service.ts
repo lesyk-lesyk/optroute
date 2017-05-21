@@ -8,12 +8,12 @@ export class DynamicProgrammingService {
   private p: number[][];
   private npow: number;
   private N: number;
-  private n : number;
+  private n: number;
   private d: number[][];
   private outputArray: number[];
   private best: number[];
   private matrix: number[][];
-  
+
   constructor(private helpersService: HelpersService) { }
 
   private DPInitialize(matrix: number[][]) {
@@ -22,7 +22,7 @@ export class DynamicProgrammingService {
     this.npow = null;
     this.N = null;
     this.n = matrix[0].length;
-    this.d= [];
+    this.d = [];
     this.outputArray = [];
     this.best = [];
     this.matrix = this.helpersService.replaceInfToZero(matrix.clone());
@@ -35,7 +35,10 @@ export class DynamicProgrammingService {
         reject('Too many point to calculate for Dynamic Programing algorithm');
       } else {
         this.DPCompute();
-        resolve(this.best.clone());
+        resolve({
+          order: this.best.clone(),
+          cost: this.helpersService.calculateRouteCost(this.matrix, this.best)
+        });
       }
     });
   }

@@ -23,29 +23,29 @@ export class TspOptService {
     console.table(matrix);
     
     return new Promise((resolve, reject) => {
-      this.bruteForceService.optimize(matrix).then(order => {
-        console.log('bruteForceService', order);
-        // resolve(order);
+      this.bruteForceService.optimize(matrix).then((results: {order, cost}) => {
+        console.log('bruteForceService', results.order, results.cost);
+        resolve(results.order);
       });
-      this.nearestNeighbourService.optimize(matrix).then(order => {
-        console.log('nearestNeighbourService', order);
-        // resolve(order);
+      this.nearestNeighbourService.optimize(matrix).then((results: {order, cost}) => {
+        console.log('nearestNeighbourService', results.order, results.cost);
+        resolve(results.order);
       });
-      this.branchAndBoundService.optimize(matrix).then(order => {
-        console.log('branchAndBoundService', order);
-        // resolve(order);
+      this.branchAndBoundService.optimize(matrix).then((results: {order, cost}) => {
+        console.log('branchAndBoundService', results.order, results.cost);
+        resolve(results.order);
       });
-      this.heldKarpService.optimize(matrix).then(order => {
-        console.log('heldKarpService', order);
-        // resolve(order);
+      this.heldKarpService.optimize(matrix).then((results: {order, cost}) => {
+        console.log('heldKarpService', results.order, results.cost);
+        resolve(results.order);
       });
-      this.dynamicProgrammingService.optimize(matrix).then(order => {
-        console.log('dynamicProgrammingService', order);
-        // resolve(order);
+      this.dynamicProgrammingService.optimize(matrix).then((results: {order, cost}) => {
+        console.log('dynamicProgrammingService', results.order, results.cost);
+        resolve(results.order);
       });
-      this.geneticService.optimize(matrix).then(order => {
-        console.log('geneticService', order);
-        // resolve(order);
+      this.geneticService.optimize(matrix).then((results: {order, cost}) => {
+        console.log('geneticService', results.order, results.cost);
+        resolve(results.order);
       });
     });
   }

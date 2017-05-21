@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
+import { HelpersService } from './../helpers/helpers.service';
 
 @Injectable()
 export class NearestNeighbourService {
+  private matrix: number[][];
+
+  constructor(private helpersService: HelpersService) { }
 
   public optimize(matrix) {
+    this.matrix = matrix.clone();
+
     return new Promise((resolve, reject) => {
 
       const order = [0];
@@ -20,7 +26,10 @@ export class NearestNeighbourService {
         row = minIndex;
       }
 
-      resolve(order.clone());
+      resolve({
+        order: order.clone(),
+        cost: this.helpersService.calculateRouteCost(this.matrix, order)
+      });
     });
   }
 }

@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
+import { HelpersService } from './../helpers/helpers.service';
 
 @Injectable()
 export class BruteForceService {
 
+  private matrix: number[][];
+
+  constructor(private helpersService: HelpersService) { }
   public optimize(matrix) {
     return new Promise((resolve, reject) => {
 
       const permArr = [];
       const usedChars = [];
+      this.matrix = matrix.clone();
 
       function permute(input) {
         let ch;
@@ -25,7 +30,7 @@ export class BruteForceService {
       };
 
       const arr = [];
-      for (let i = 1; i < matrix.length; i++) {
+      for (let i = 1; i < this.matrix.length; i++) {
         arr.push(i);
       }
       const permutedArray = permute(arr);
@@ -37,13 +42,16 @@ export class BruteForceService {
       for (let i = 0; i < permutedArray.length; i++) {
         let sum = 0;
         for (let j = 0; j < permutedArray[i].length - 1; j++) {
-          sum += matrix[permutedArray[i][j]][permutedArray[i][j + 1]];
+          sum += this.matrix[permutedArray[i][j]][permutedArray[i][j + 1]];
         }
         if (sum < minRoute) { minRoute = sum; order = permutedArray[i]; };
       }
       order.pop();
 
-      resolve(order.clone());
+      resolve({
+        order: order.clone(),
+        cost: this.helpersService.calculateRouteCost(this.matrix, order)
+      });
     });
   }
 }

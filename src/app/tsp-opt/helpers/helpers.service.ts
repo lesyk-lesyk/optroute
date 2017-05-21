@@ -151,4 +151,13 @@ export class HelpersService {
     const zeroIndex = array.indexOf(0);
     return array.slice(zeroIndex).concat(array.slice(0, zeroIndex));
   }
+
+  calculateRouteCost(matrix: number[][], order: number[]): number {
+    let cost = 0;
+    for (var i = 0; i < order.length - 1; i++) {
+      cost += matrix[order[i]][order[i + 1]];
+    }
+    cost += matrix[order[order.length-1]][order[0]];
+    return cost;
+  }
 }

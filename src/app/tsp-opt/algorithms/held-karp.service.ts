@@ -9,6 +9,7 @@ export class HeldKarpService {
   private costWithPi: number[][];   // matrix of adjusted costs
   private bestNode: QNode;
   private best: number[];
+  private matrix: number[][];
 
   constructor(private helpersService: HelpersService) { }
 
@@ -19,6 +20,7 @@ export class HeldKarpService {
     this.bestNode = new QNode();
     this.bestNode.lowerBound = Number.MAX_VALUE;
     this.best = [];
+    this.matrix = matrix.clone();
   }
 
   public optimize(matrix: number[][]) {
@@ -30,7 +32,10 @@ export class HeldKarpService {
         this.BNBHKSolve();
         this.best.unshift(0);
         this.best.pop();
-        resolve(this.best.clone());
+        resolve({
+          order: this.best.clone(),
+          cost: this.helpersService.calculateRouteCost(this.matrix, this.best)
+        });
       }
     });
   }

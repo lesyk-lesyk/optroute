@@ -34,7 +34,10 @@ export class BranchAndBoundService {
         this.BNBInitialize(matrix);
         this.BNBSearch(this.sourceCity, this.initialRoute);
         this.optimumRoute.pop();
-        resolve(this.optimumRoute.clone());
+        resolve({
+          order: this.optimumRoute.clone(),
+          cost: this.helpersService.calculateRouteCost(this.matrix, this.optimumRoute)
+        });
       }
     });
   }

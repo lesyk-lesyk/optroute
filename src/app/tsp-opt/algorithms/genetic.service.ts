@@ -55,8 +55,12 @@ export class GeneticService {
         this.GANextGeneration();
       }
       while (this.currentGeneration < 1500);
-      
-      resolve(this.helpersService.reformatArray(this.best));
+
+      const reformattedOrder = this.helpersService.reformatArray(this.best);
+      resolve({
+        order: reformattedOrder,
+        cost: this.helpersService.calculateRouteCost(this.matrix, reformattedOrder)
+      });
     });
   }
 
