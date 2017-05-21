@@ -23,44 +23,37 @@ export class TspOptService {
   ) { }
 
   public oprimizeRoute(matrix: number[][]) {
-
+    
     return new Promise((resolve, reject) => {
+      let bruteForceServiceTimer = this.benchmarkService.createTimer('bruteForceService');
+      this.bruteForceService.optimize(matrix).then((data) => {
+        bruteForceServiceTimer.stop();
+      });
 
-      this.benchmarkService.measure(this.bruteForceService.optimize(matrix))
-        .then((results: { data: OptimisationResult, time: number }) => {
-          console.log('bruteForceService', results.data, results.time);
-          resolve(results.data.order);
-        });
+      let nearestNeighbourTimer = this.benchmarkService.createTimer('nearestNeighbourService');
+      this.nearestNeighbourService.optimize(matrix).then((data) => {
+        nearestNeighbourTimer.stop();
+      });
 
-      this.benchmarkService.measure(this.nearestNeighbourService.optimize(matrix))
-        .then((results: { data: OptimisationResult, time: number }) => {
-          console.log('nearestNeighbourService', results.data, results.time);
-          // resolve(results.order);
-        });
+      let branchAndBoundServiceTimer = this.benchmarkService.createTimer('branchAndBoundService');
+      this.branchAndBoundService.optimize(matrix).then((data) => {
+        branchAndBoundServiceTimer.stop();
+      });
 
-      this.benchmarkService.measure(this.branchAndBoundService.optimize(matrix))
-        .then((results: { data: OptimisationResult, time: number }) => {
-          console.log('branchAndBoundService', results.data, results.time);
-          // resolve(results.order);
-        });
+      let heldKarpServiceTimer = this.benchmarkService.createTimer('heldKarpService');
+      this.heldKarpService.optimize(matrix).then((data) => {
+        heldKarpServiceTimer.stop();
+      });
 
-      this.benchmarkService.measure(this.heldKarpService.optimize(matrix))
-        .then((results: { data: OptimisationResult, time: number }) => {
-          console.log('heldKarpService', results.data, results.time);
-          // resolve(results.order);
-        });
+      let dynamicProgrammingServiceTimer = this.benchmarkService.createTimer('dynamicProgrammingService');
+      this.dynamicProgrammingService.optimize(matrix).then((data) => {
+        dynamicProgrammingServiceTimer.stop();
+      });
 
-      this.benchmarkService.measure(this.dynamicProgrammingService.optimize(matrix))
-        .then((results: { data: OptimisationResult, time: number }) => {
-          console.log('dynamicProgrammingService', results.data, results.time);
-          // resolve(results.order);
-        });
-
-      this.benchmarkService.measure(this.geneticService.optimize(matrix))
-        .then((results: { data: OptimisationResult, time: number }) => {
-          console.log('geneticService', results.data, results.time);
-          // resolve(results.order);
-        });
+      let geneticServiceTimer = this.benchmarkService.createTimer('geneticService');
+      this.geneticService.optimize(matrix).then((data) => {
+        geneticServiceTimer.stop();
+      });
     });
   }
 }

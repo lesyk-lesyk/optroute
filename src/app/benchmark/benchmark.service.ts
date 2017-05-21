@@ -5,7 +5,7 @@ export class BenchmarkService {
 
   constructor() { }
 
-  private createTimer() {
+  public createTimer(test) {
     const start = performance.now();
     return {
       stop: function () {
@@ -15,18 +15,4 @@ export class BenchmarkService {
       }
     }
   };
-
-  public measure(promise: Promise<any>) {
-    return new Promise((resolve, reject) => {
-      const timer = this.createTimer();
-      promise
-        .then(data => {
-          const time = timer.stop();
-          resolve({ data, time });
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  }
 }
