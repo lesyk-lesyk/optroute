@@ -82,6 +82,14 @@ export class SearchRouteComponent implements OnInit {
   }
 
   public handleMapClick(event): void {
+    if (this.mapPoints.length === 10) {
+      this.notificationsService.showNotificationPopup({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Max map points - 10'
+      });
+      return;
+    }
     this.gMapApiClientService.getAddress(event.latLng)
       .then(address => {
         this.addMapPoint(address, event.latLng);

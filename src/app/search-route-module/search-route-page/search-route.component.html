@@ -8,8 +8,9 @@
     <div class="col-sm-5 map-controls-container">
       <div class="text-center point-controls-container">
         <div class="autocomplete-block">
-          <p-autoComplete styleClass="address-autocomplete"></p-autoComplete>
-          <button type="button" pButton label="Add" icon="fa-map-marker"></button>
+          <!--<p-autoComplete styleClass="address-autocomplete"></p-autoComplete>
+          <button type="button" pButton label="Add" icon="fa-map-marker"></button>-->
+          <span class="points-count text-info">Points: {{mapPoints.length}} / 10</span>
         </div>
         <div class="buttons-block">
           <button type="button" class="ui-button-warning" pButton label="Clear" icon="fa-close" (click)="clear()"></button>

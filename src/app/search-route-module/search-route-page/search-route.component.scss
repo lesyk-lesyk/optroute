@@ -39,6 +39,11 @@ body {
   .buttons-block {
     float: right;
   }
+  .points-count {
+    line-height: 37px;
+    font-size: 15px;
+    font-weight: bolder;
+  }
 }
 
 $pointControlsContainerHeight: 55px;
