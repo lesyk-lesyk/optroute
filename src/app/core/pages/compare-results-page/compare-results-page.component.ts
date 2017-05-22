@@ -80,4 +80,8 @@ export class CompareResultsPageComponent implements OnInit {
     // this.chartTime.refresh();
     // this.costChart.refresh();
   }
+
+  ngOnDestroy(){
+    this.comparisonService.clear();
+  }
 }
