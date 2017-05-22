@@ -42,12 +42,12 @@ export class SearchRouteComponent implements OnInit {
 
   public originalRouteInfo: string;
   public optRouteInfo: string;
-  
+
   constructor(
-      private gMapApiClientService: GMapApiClientService,
-      private notificationsService: NotificationsService,
-      private gMapCalculationsService: GMapCalculationsService,
-      private tspOptService: TspOptService) {
+    private gMapApiClientService: GMapApiClientService,
+    private notificationsService: NotificationsService,
+    private gMapCalculationsService: GMapCalculationsService,
+    private tspOptService: TspOptService) {
     this.directionsDisplay = new google.maps.DirectionsRenderer();
   }
 
@@ -150,6 +150,7 @@ export class SearchRouteComponent implements OnInit {
         this.tspOptService.oprimizeRoute(matrix).then((result: OptimisationResult) => {
           console.log('optimise result', result);
           this.buildOptRoute(result.order);
+          this.reorderMapPoints(result.order);
         });
       })
       .catch((error: Message) => {
@@ -159,6 +160,14 @@ export class SearchRouteComponent implements OnInit {
           detail: error.detail
         });
       });
+  }
+
+  private reorderMapPoints(order) {
+    let newArr = [];
+    order.forEach(item => {
+      newArr.push(this.mapPoints[item]);
+    });
+    this.mapPoints = newArr;
   }
 
   /* TODO: should refactor buildOptRoute() and buildRoute() */
@@ -208,6 +217,12 @@ export class SearchRouteComponent implements OnInit {
     this.mapPoints = [];
     this.clearOverlays();
     this.clearDirections();
+    this.clearRotesInfo();
+  }
+
+  private clearRotesInfo() {
+    this.originalRouteInfo = undefined;
+    this.optRouteInfo = undefined;
   }
 
   private clearOverlays() {
@@ -228,5 +243,6 @@ export class SearchRouteComponent implements OnInit {
     this.clearDirections();
     this.initDefaultData();
     this.renderOverlays();
+    this.clearRotesInfo();
   }
 }
