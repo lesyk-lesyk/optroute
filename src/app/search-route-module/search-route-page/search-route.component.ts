@@ -40,6 +40,9 @@ export class SearchRouteComponent implements OnInit {
   public mapPoints: MapPoint[] = [];
   public emptyMapPointsMessage = 'Empty Addresses list. Please, click on map to add point.';
 
+  public originalRouteInfo: string;
+  public optRouteInfo: string;
+  
   constructor(
       private gMapApiClientService: GMapApiClientService,
       private notificationsService: NotificationsService,
@@ -124,7 +127,9 @@ export class SearchRouteComponent implements OnInit {
           detail: 'Success!'
         });
         this.directionsDisplay.setDirections(response);
-        console.log(this.gMapCalculationsService.getRouteInfo(response.routes[0]));
+        const tmp = this.gMapCalculationsService.getRouteInfo(response.routes[0]);
+        this.originalRouteInfo = `${tmp.length} ${tmp.duration}`;
+        this.optRouteInfo = undefined;
         this.clearOverlays();
       })
       .catch((error: Message) => {
@@ -178,7 +183,8 @@ export class SearchRouteComponent implements OnInit {
           detail: 'Success!'
         });
         this.directionsDisplay.setDirections(response);
-        console.log(this.gMapCalculationsService.getRouteInfo(response.routes[0]));
+        const tmp = this.gMapCalculationsService.getRouteInfo(response.routes[0]);
+        this.optRouteInfo = `${tmp.length} ${tmp.duration}`;
         this.clearOverlays();
       })
       .catch((error: Message) => {

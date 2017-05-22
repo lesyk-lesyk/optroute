@@ -127,5 +127,29 @@ $routeControlsContainerHeight: 180px;
     width: initial;
     margin: 10px 0px;
     font-size: 12px;
+    .routes-info {
+      padding-left: 2px;
+      padding-right: 2px;
+    }
+  }
+  .dl-horizontal,
+  dt,
+  dd {
+    padding: 0px;
+    margin: 0px;
+  }
+  .dl-horizontal dt {
+    float: left;
+    font-size: 14px;
+    width: 80px;
+    overflow: hidden;
+    clear: left;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .dl-horizontal dd {
+    margin-left: 85px;
+    font-size: 14px;
   }
 }
