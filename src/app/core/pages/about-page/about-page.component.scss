@@ -1,10 +1,25 @@
-.top-container, 
-.bottom-container{
-  height: calc(50% - 25px);
+@media screen and (min-height: 730px) {
+  .top-container, 
+  .bottom-container{
+    height: calc(50% - 25px);
+  }
+}
+
+@media screen and (max-height: 729px) {
+  .top-container {
+    height: auto;
+  }
+  .bottom-container{
+    height: 300px;
+  }
 }
 
 dt, 
 dd {
   font-size: 16px;
   padding: 10px 0px;
+}
+
+.author {
+  margin-top: 20px;
 }
