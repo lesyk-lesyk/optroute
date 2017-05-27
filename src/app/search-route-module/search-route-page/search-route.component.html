@@ -1,0 +1,56 @@
+<div class="container-fluid main-container">
+  <div class="row main-row">
+    <div class="col-sm-7 gmap-container">
+      <p-gmap [options]="options" [overlays]="overlays" [style]="{'width':'100%','height':'100%'}" (onMapClick)="handleMapClick($event)"
+        (onMapReady)="setMap($event)">
+      </p-gmap>
+    </div>
+    <div class="col-sm-5 map-controls-container">
+      <div class="text-center point-controls-container">
+        <div class="autocomplete-block">
+          <!--<p-autoComplete styleClass="address-autocomplete"></p-autoComplete>
+          <button type="button" pButton label="Add" icon="fa-map-marker"></button>-->
+          <span class="points-count text-info">Points: {{mapPoints.length}} / 10</span>
+        </div>
+        <div class="buttons-block">
+          <button type="button" class="ui-button-warning" pButton label="Clear" icon="fa-close" (click)="clear()"></button>
+          <button type="button" class="ui-button-warning" pButton label="Reset" icon="fa-map-marker" (click)="reset()"></button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <p-dataTable styleClass="map-points-table" [value]="mapPoints" [emptyMessage]="emptyMapPointsMessage">
+          <p-column field="address" header="Addresses"></p-column>
+        </p-dataTable>
+      </div>
+
+      <div class="route-controls-container">
+        <div class="col-xs-12 text-center">
+          <button type="button" pButton label="1 Build" icon="fa-map-signs" (click)="buildRoute()"></button>
+          <button type="button" pButton label="2 Optimise" icon="fa-play" (click)="optimiseRoute()"></button>
+          <button type="button" pButton label="3 Details " icon="fa-bar-chart" [routerLink]="['/compare-results']"></button>
+        </div>
+
+        <div class="col-xs-12 routes-info">
+          <dl class="dl-horizontal">
+            <dt>
+              <p class="text-info">Original: </p>
+            </dt>
+            <dd>{{originalRouteInfo || '...'}}</dd>
+            <dt>
+              <p class="text-success">Optimised: </p>
+            </dt>
+            <dd>{{optRouteInfo || '...'}}</dd>
+          </dl>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--<button type="button" pButton label="Zoom In" icon="fa-search-plus" (click)="zoomIn()"></button>
+    <button type="button" pButton label="Zoom Out" icon="fa-search-minus" (click)="zoomOut()"></button>-->

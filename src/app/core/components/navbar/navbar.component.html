@@ -1,0 +1,41 @@
+<div class="navbar navbar-default navbar-custom navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" (click)="toggleCollapseState()">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+      </button>
+			<a class="navbar-brand hreflogo" routerLink="/">
+				<img src="/assets/images/logo.png" height=35 width=35>
+			</a>
+		</div>
+		<div class="navbar-collapse collapse" [ngClass]="{ 'in': expanded }">
+			<ul class="nav navbar-nav">
+				<li>
+					<a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+						<span class="glyphicon glyphicon-home"></span>
+						<span>Home</span></a>
+				</li>
+				<li>
+					<a routerLink="/search-route" routerLinkActive="active">
+						<span class="glyphicon glyphicon-search"></span>
+						<span>Search route</span></a>
+				</li>
+				<li>
+					<a routerLink="/about" routerLinkActive="active">
+						<span class="glyphicon glyphicon-info-sign"></span>
+						<span>About</span></a>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a href="https://github.com/okachynskyy/optroute" target="blank">
+						<span class="fa fa-github"></span>
+						<span>GitHub</span>
+						<span class="glyphicon glyphicon-new-window"></span></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

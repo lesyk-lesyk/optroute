@@ -1,0 +1,27 @@
+.ui-growl {
+  margin-top: 50px;
+}
+
+// Omega style for notifications
+.ui-growl-item {
+  color: #FFFFFF;
+}
+
+.ui-growl-item-container.ui-state-highlight {
+  &.ui-growl-message-info {
+    background-color: #2196f3;
+    border-color: #2196f3;
+  }
+  &.ui-growl-message-error {
+    background-color: #f44336;
+    border-color: #f44336;
+  }
+  &.ui-growl-message-warn {
+    background-color: #FFB300;
+    border-color: #FFB300;
+  }
+  &.ui-growl-message-success {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+  }
+}
