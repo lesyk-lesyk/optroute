@@ -10,6 +10,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 // Pages
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
+import { AboutPageComponent } from "app/core/pages/about-page/about-page.component";
 
 // Services
 import { FormatterService } from './services/formatter.service';
@@ -26,6 +27,7 @@ import { CompareResultsPageComponent } from './pages/compare-results-page/compar
     NavbarComponent,
     PageNotFoundComponent,
     HomePageComponent,
+    AboutPageComponent,
     CompareResultsPageComponent
   ],
   exports: [
