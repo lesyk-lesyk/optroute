@@ -74,15 +74,6 @@ export class TspOptService {
           });
         })
         .then(() => {
-          let geneticServiceTimer = this.benchmarkService.createTimer('geneticService');
-          return this.geneticService.optimize(matrix).then((result) => {
-            const time = geneticServiceTimer.stop();
-            result.searchTime = time;
-            this.comparisonService.add(result);
-            console.log(result.order, result.cost, result.searchTime);
-          });
-        })
-        .then(() => {
           const bestResult = this.comparisonService.getBestResult();
           console.log('last then', bestResult);
           resolve(bestResult);
